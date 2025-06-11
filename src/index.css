@@ -1,2 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&display=swap');
+
 @import "tailwindcss";
 @plugin "daisyui";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@layer base {
+    html {
+        @apply transition-colors duration-300;
+    }
+    body{
+        @apply bg-white/80 dark:bg-gray-900 dark:text-gray-100;
+    }
+}
+
+button{
+    cursor: pointer;
+}
+
+.cabin{
+    font-family: "Cabin", sans-serif;
+}
+
+@font-face {
+  font-family: 'Odena Glamour';
+  src: url('./assets/Fonts/OdenaGlamour-BF6625f66aead7f.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Qyore';
+  src: url('./assets/Fonts/Qyore.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.odena{
+    font-family: 'Odena Glamour';
+}
+
+.qyore{
+    font-family: 'Qyore';
+}
