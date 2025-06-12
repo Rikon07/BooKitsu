@@ -12,8 +12,10 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+
+import Loader from "../Components/Main Components/Loader";
 import app from "../Firebase/firebase.config";
-import Loader from "../Components/Loader";
+
 
 const auth = getAuth(app);
 const AuthProvider = ({ children }) => {

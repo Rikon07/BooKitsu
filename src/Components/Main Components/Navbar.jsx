@@ -1,17 +1,64 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import ThemeToggle from "../Main Components/ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
-// import { AuthContext } from "../../Provider/AuthProvider";
+import { AuthContext } from "../../Provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
-  // const { user, logOut } = useContext(AuthContext);
-  const user = null;
+  const [theme, setTheme] = useState("");
+  useEffect(() => {
+  const htmlElement = document.documentElement;
+  const observer = new MutationObserver(() => {
+    setTheme(htmlElement.classList.contains("dark") ? "dark" : "light");
+  });
+
+  // Initial check
+  setTheme(htmlElement.classList.contains("dark") ? "dark" : "light");
+
+  // Observe changes to class list
+  observer.observe(htmlElement, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+
+  return () => observer.disconnect();
+}, []);
+
+  const { user, logOut } = useContext(AuthContext);
+  // const user = null;
   const location = useLocation();
 
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+   const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        Swal.fire({
+          title: "Logged Out",
+          text: "You have been logged out successfully!",
+          icon: "success",
+          background: theme === "dark" ? "#223A5E" : "#D0E7F9",
+          color: theme === "dark" ? "#90D1CA" : "#096B68",
+          confirmButtonColor: "#4FD1C5",
+          confirmButtonText: "OK",
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          title: "Logout Failed",
+          text: "Something went wrong while logging out.",
+          icon: "error",
+          background: theme === "dark" ? "#223A5E" : "#D0E7F9",
+          color: theme === "dark" ? "#90D1CA" : "#096B68",
+          confirmButtonColor: "#4FD1C5",
+          confirmButtonText: "Try Again",
+        });
+      });
+  };""
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -95,20 +142,20 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content menu p-3 space-y-2 bg-[#D0E7F9] dark:bg-[#223A5E] shadow-md rounded-xl w-52 z-50"
+              className="dropdown-content menu p-3 space-y-1 bg-[#D0E7F9] dark:bg-[#223A5E] shadow-md rounded-xl w-52 z-50"
             >
-              <li className="text-[#223A5E] dark:text-[#D0E7F9] font-medium">
+              <li className="px-4 py-2 text-[#223A5E] hover:text-[#D0E7F9] dark:text-[#D0E7F9] dark:hover:text-[#223A5E] font-medium rounded-xl hover:bg-[#223A5E] dark:hover:bg-[#D0E7F9]">
                 {user.displayName || "User"}
               </li>
               <li>
-                <Link to="/profile" className="hover:text-[#4FD1C5] transition">
+                <Link to="/profile" className="px-4 py-2 hover:text-[#4FD1C5] rounded-xl hover:underline hover:bg-[#223A5E] dark:hover:bg-[#D0E7F9] transition">
                   My Profile
                 </Link>
               </li>
-              <li>
+              <li className="px-1 py-2">
                 <button
-                  // onClick={handleLogOut}
-                  className="text-sm text-left px-2 py-1 rounded hover:bg-[#4FD1C5]/10 text-[#223A5E] dark:text-[#D0E7F9] border border-transparent hover:border-[#4FD1C5] transition"
+                  onClick={handleLogOut}
+                  className="text-sm text-left px-3 py-1 rounded-xl  text-[#223A5E] hover:text-[#D0E7F9] dark:text-[#D0E7F9] dark:hover:text-[#223A5E] border border-[#4FD1C5] hover:bg-[#223A5E] dark:hover:bg-[#D0E7F9] transition"
                 >
                   Logout
                 </button>
@@ -164,7 +211,7 @@ const Navbar = () => {
                   My Profile
                 </Link>
                 <button
-                  // onClick={handleLogOut}
+                  onClick={handleLogOut}
                   className="w-full border border-[#4FD1C5] text-[#4FD1C5] py-2 rounded-lg font-semibold hover:bg-[#4FD1C5] hover:text-[#223A5E]"
                 >
                   Logout
