@@ -27,6 +27,7 @@ const Navbar = () => {
 }, []);
 
   const { user, logOut } = useContext(AuthContext);
+  // console.log(user);
   // const user = null;
   const location = useLocation();
 
@@ -188,9 +189,9 @@ const Navbar = () => {
             <ul className="space-y-2 text-[#223A5E] dark:text-[#D0E7F9]">
               {Links}
             </ul>
-            <ThemeToggle />
             {!user ? (
               <>
+              <ThemeToggle />
                 <Link to="/login">
                   <button className="w-full bg-[#4FD1C5] text-[#223A5E] py-2 rounded-lg font-semibold hover:bg-[#3CA6A6] hover:text-[#F7FAFC]">
                     Login
@@ -204,12 +205,24 @@ const Navbar = () => {
               </>
             ) : (
               <>
+              <div className="flex items-center gap-4">
+                <ThemeToggle />
+                {user.photoURL ? (
+                    <img
+                      src={user.photoURL}
+                      alt="User"
+                      className="w-10 h-10 rounded-full border-2 border-[#129990] dark:border-[#90D1CA]"
+                    />
+                  ) : (
+                    <FaUserCircle className="text-3xl text-[#129990] dark:text-[#90D1CA]" />
+                  )}
                 <p className="text-[#223A5E] dark:text-[#D0E7F9] font-medium">
                   {user.displayName}
                 </p>
                 <Link to="/profile" className="text-[#3CA6A6] hover:text-[#4FD1C5]">
                   My Profile
                 </Link>
+              </div>
                 <button
                   onClick={handleLogOut}
                   className="w-full border border-[#4FD1C5] text-[#4FD1C5] py-2 rounded-lg font-semibold hover:bg-[#4FD1C5] hover:text-[#223A5E]"

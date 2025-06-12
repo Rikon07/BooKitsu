@@ -8,8 +8,8 @@ const Loader = () => {
             <PacmanLoader
                 color="#a2c8ec"
                 loading={true}
-                size={80}
-                speedMultiplier={1.2}
+                size={50}
+                speedMultiplier={1.8}
                 aria-label="Loading Spinner"
             />
             <p className="text-[#4FD1C5] text-sm dark:text-[#223A5E] font-medium">

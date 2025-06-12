@@ -21,9 +21,9 @@ const Login = () => {
       title,
       text,
       icon,
-      background: "#FFFBDE",
-      color: "#096B68",
-      confirmButtonColor: "#129990",
+      background: "#D0E7F9",
+        color: "#223A5E",
+        confirmButtonColor: "#4FD1C5",
     });
   };
 

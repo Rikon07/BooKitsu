@@ -64,6 +64,7 @@ const Register = () => {
     googleSignIn()
       .then((result) => {
         setUser(result.user);
+        // console.log(result.user)
         Swal.fire({
           title: "Welcome!",
           text: `Logged in as ${result.user.displayName}`,
@@ -72,7 +73,7 @@ const Register = () => {
           color: "#223A5E",
           confirmButtonColor: "#4FD1C5",
         });
-        navigate("/");
+        navigate("/", { replace: true });
       })
       .catch((error) => {
         Swal.fire({
