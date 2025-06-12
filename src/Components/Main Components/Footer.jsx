@@ -1,10 +1,20 @@
 import { Link } from "react-router-dom";
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
-
+import { useEffect } from "react";
+import Aos from "aos";
+import "aos/dist/aos.css";
 const Footer = () => {
+
+    useEffect(() => {
+    Aos.init({
+      duration: 800,
+      once: true,
+    });
+  }, []);
+
   return (
-    <footer className="bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9] px-6 md:px-12 lg:px-20 py-10 cabin border-t border-[#4FD1C5]/20">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
+    <footer className="bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9] px-6 md:px-12 lg:px-32 py-6 md:py-10 cabin border-t border-[#4FD1C5]/20">
+      <div className="mx-auto grid grid-cols-1 md:grid-cols-4 gap-10" data-aos="fade-up">
         <div>
           <Link to="/" className="text-xl md:text-2xl font-bold qyore tracking-wide text-[#223A5E] dark:text-[#D0E7F9] drop-shadow-sm dark:drop-shadow-[0_0_10px_#4FD1C5]">
             BooKitsu
@@ -53,19 +63,19 @@ const Footer = () => {
             </button>
           </form> */}
           <div className="flex gap-4 mt-4 text-2xl">
-            <a href="https://www.facebook.com/programmingHero" target="_blank" rel="noopener noreferrer" className="hover:text-[#4FD1C5] transition">
+            <a href="https://www.facebook.com/programmingHero" target="_blank" rel="noopener noreferrer" className="hover:text-[#4FD1C5] transition" data-aos="zoom-in">
               <FaFacebook />
             </a>
-            <a href="https://github.com/Rikon07" target="_blank" rel="noopener noreferrer" className="hover:text-[#4FD1C5] transition">
+            <a href="https://github.com/Rikon07" target="_blank" rel="noopener noreferrer" className="hover:text-[#4FD1C5] transition" data-aos="zoom-in">
               <FaGithub />
             </a>
-            <a href="https://www.linkedin.com/in/rikon07/" target="_blank" rel="noopener noreferrer" className="hover:text-[#4FD1C5] transition">
+            <a href="https://www.linkedin.com/in/rikon07/" target="_blank" rel="noopener noreferrer" className="hover:text-[#4FD1C5] transition" data-aos="zoom-in">
               <FaLinkedin />
             </a>
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#4FD1C5] transition">
+            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#4FD1C5] transition" data-aos="zoom-in">
               <FaInstagram />
             </a>
-            <a href="https://www.youtube.com/c/ProgrammingHero" target="_blank" rel="noopener noreferrer" className="hover:text-[#4FD1C5] transition">
+            <a href="https://www.youtube.com/c/ProgrammingHero" target="_blank" rel="noopener noreferrer" className="hover:text-[#4FD1C5] transition" data-aos="zoom-in">
               <FaYoutube />
             </a>
           </div>
@@ -73,7 +83,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom Copyright */}
-      <div className="text-center text-xs mt-10 text-[#3C4A61] dark:text-[#8FA2BF]">
+      <div className="border-t border-[#4FD1C5] text-center text-xs mt-10 text-[#3C4A61] dark:text-[#8FA2BF] pt-4">
         &copy; {new Date().getFullYear()} BooKitsu. All rights reserved.
       </div>
     </footer>
