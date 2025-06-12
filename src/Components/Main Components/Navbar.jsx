@@ -40,16 +40,16 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
+      initial={{ y: -50 }}
       animate={{ y: 0 }}
-      transition={{ type: "spring", stiffness: 120 }}
+      transition={{ type: "spring", stiffness: 60 }}
       className={`cabin fixed z-50 top-0 left-1/2 -translate-x-1/2 w-full px-6 md:px-10 lg:px-14 xl:px-18 py-4 rounded-lg shadow-md flex items-center justify-between transition-all duration-300 ${
         scrolled
-          ? "bg-[#D0E7F9]/20 dark:bg-[#223A5E]/80 backdrop-blur-xl"
+          ? "bg-[#D0E7F9]/20 dark:bg-[#223A5E]/20 backdrop-blur-xl"
           : "bg-[#D0E7F9] dark:bg-[#223A5E]"
       }`}
     >
-      {/* Logo with dark mode glow */}
+      {/* Logo  */}
       <Link
         to="/"
         className="text-2xl font-bold flex items-center gap-1 qyore tracking-wide text-[#223A5E] dark:text-[#D0E7F9] transition"
