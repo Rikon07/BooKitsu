@@ -16,7 +16,6 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        // loader: () => fetch('https://ryk-hub-freelance-server.vercel.app/tasks'),
         Component: Home,
       },
       {
