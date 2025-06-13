@@ -10,7 +10,7 @@ import Anime1 from "../../assets/Animations/Anime -1.json";
 import Anime2 from "../../assets/Animations/Anime -2.json";
 import Anime3 from "../../assets/Animations/Anime -3.json";
 import Anime4 from "../../assets/Animations/Anime -4.json";
-import Anime5 from "../../assets/Animations/Anime -5.json";
+import Anime6 from "../../assets/Animations/Animation - 6.json";
 
 const bannerData = [
   {
@@ -46,7 +46,7 @@ const bannerData = [
     image: "https://i.pinimg.com/originals/63/c2/96/63c296e8a56aa999a8807285fff4fc6b.gif",
     title: "Unlimited Access to Books",
     desc: "Explore, borrow, and manage all your favorite books in one place.",
-    animation: Anime5,
+    animation: Anime6,
   },
 ];
 

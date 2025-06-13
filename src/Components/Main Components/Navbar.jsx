@@ -7,6 +7,15 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 
 const Navbar = () => {
+
+  const { user, logOut } = useContext(AuthContext);
+  console.log(user.photoURL);
+  // const user = null;
+  const location = useLocation();
+
+  const [scrolled, setScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const [theme, setTheme] = useState("");
   useEffect(() => {
   const htmlElement = document.documentElement;
@@ -26,13 +35,7 @@ const Navbar = () => {
   return () => observer.disconnect();
 }, []);
 
-  const { user, logOut } = useContext(AuthContext);
-  // console.log(user);
-  // const user = null;
-  const location = useLocation();
-
-  const [scrolled, setScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
 
    const handleLogOut = () => {
     logOut()
@@ -209,10 +212,13 @@ const Navbar = () => {
                 <ThemeToggle />
                 {user.photoURL ? (
                     <img
-                      src={user.photoURL}
-                      alt="User"
-                      className="w-10 h-10 rounded-full border-2 border-[#129990] dark:border-[#90D1CA]"
-                    />
+  key={user.photoURL}
+  src={user.photoURL}
+  alt="User"
+  referrerPolicy="no-referrer"
+  className="w-10 h-10 rounded-full border-2 border-[#4FD1C5] object-cover bg-gray-200"
+/>
+
                   ) : (
                     <FaUserCircle className="text-3xl text-[#129990] dark:text-[#90D1CA]" />
                   )}
