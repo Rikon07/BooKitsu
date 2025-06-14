@@ -106,7 +106,7 @@ const Banner = () => {
                 </p>
                 <Link to="/all-books">
                   <button className="text-white px-8 py-3 rounded-full font-semibold transition-all bg-gradient-to-b from-[#4FD1C5] to-[#223A5E] shadow-lg hover:shadow-xl hover:bg-gradient-to-b hover:from-[#223A5E] hover:to-[#4FD1C5]">
-                    Browse All Books
+                    Explore Books
                   </button>
                 </Link>
               </Fade>

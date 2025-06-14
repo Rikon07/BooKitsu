@@ -7,9 +7,8 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 
 const Navbar = () => {
-
   const { user, logOut } = useContext(AuthContext);
-  console.log(user.photoURL);
+  // console.log(user.photoURL);
   // const user = null;
   const location = useLocation();
 
@@ -18,26 +17,24 @@ const Navbar = () => {
 
   const [theme, setTheme] = useState("");
   useEffect(() => {
-  const htmlElement = document.documentElement;
-  const observer = new MutationObserver(() => {
+    const htmlElement = document.documentElement;
+    const observer = new MutationObserver(() => {
+      setTheme(htmlElement.classList.contains("dark") ? "dark" : "light");
+    });
+
+    // Initial check
     setTheme(htmlElement.classList.contains("dark") ? "dark" : "light");
-  });
 
-  // Initial check
-  setTheme(htmlElement.classList.contains("dark") ? "dark" : "light");
+    // Observe changes to class list
+    observer.observe(htmlElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
 
-  // Observe changes to class list
-  observer.observe(htmlElement, {
-    attributes: true,
-    attributeFilter: ["class"],
-  });
+    return () => observer.disconnect();
+  }, []);
 
-  return () => observer.disconnect();
-}, []);
-
-  
-
-   const handleLogOut = () => {
+  const handleLogOut = () => {
     logOut()
       .then(() => {
         Swal.fire({
@@ -62,7 +59,8 @@ const Navbar = () => {
           confirmButtonText: "Try Again",
         });
       });
-  };""
+  };
+  ("");
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -82,10 +80,26 @@ const Navbar = () => {
 
   const Links = (
     <>
-      <li><NavLink to="/" className={navLinkStyle}>Home</NavLink></li>
-      <li><NavLink to="/all-books" className={navLinkStyle}>All Books</NavLink></li>
-      <li><NavLink to="/add-book" className={navLinkStyle}>Add Book</NavLink></li>
-      <li><NavLink to="/borrowed" className={navLinkStyle}>Borrowed Books</NavLink></li>
+      <li>
+        <NavLink to="/" className={navLinkStyle}>
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/all-books" className={navLinkStyle}>
+          All Books
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/add-book" className={navLinkStyle}>
+          Add Book
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/borrowed" className={navLinkStyle}>
+          Borrowed Books
+        </NavLink>
+      </li>
     </>
   );
 
@@ -152,7 +166,10 @@ const Navbar = () => {
                 {user.displayName || "User"}
               </li>
               <li>
-                <Link to="/profile" className="px-4 py-2 hover:text-[#4FD1C5] rounded-xl hover:underline hover:bg-[#223A5E] dark:hover:bg-[#D0E7F9] transition">
+                <Link
+                  to="/profile"
+                  className="px-4 py-2 hover:text-[#4FD1C5] rounded-xl hover:underline hover:bg-[#223A5E] dark:hover:bg-[#D0E7F9] transition"
+                >
                   My Profile
                 </Link>
               </li>
@@ -194,7 +211,7 @@ const Navbar = () => {
             </ul>
             {!user ? (
               <>
-              <ThemeToggle />
+                <ThemeToggle />
                 <Link to="/login">
                   <button className="w-full bg-[#4FD1C5] text-[#223A5E] py-2 rounded-lg font-semibold hover:bg-[#3CA6A6] hover:text-[#F7FAFC]">
                     Login
@@ -208,27 +225,29 @@ const Navbar = () => {
               </>
             ) : (
               <>
-              <div className="flex items-center gap-4">
-                <ThemeToggle />
-                {user.photoURL ? (
+                <div className="flex items-center gap-4">
+                  <ThemeToggle />
+                  {user.photoURL ? (
                     <img
-  key={user.photoURL}
-  src={user.photoURL}
-  alt="User"
-  referrerPolicy="no-referrer"
-  className="w-10 h-10 rounded-full border-2 border-[#4FD1C5] object-cover bg-gray-200"
-/>
-
+                      key={user.photoURL}
+                      src={user.photoURL}
+                      alt="User"
+                      referrerPolicy="no-referrer"
+                      className="w-10 h-10 rounded-full border-2 border-[#4FD1C5] object-cover bg-gray-200"
+                    />
                   ) : (
                     <FaUserCircle className="text-3xl text-[#129990] dark:text-[#90D1CA]" />
                   )}
-                <p className="text-[#223A5E] dark:text-[#D0E7F9] font-medium">
-                  {user.displayName}
-                </p>
-                <Link to="/profile" className="text-[#3CA6A6] hover:text-[#4FD1C5]">
-                  My Profile
-                </Link>
-              </div>
+                  <p className="text-[#223A5E] dark:text-[#D0E7F9] font-medium">
+                    {user.displayName}
+                  </p>
+                  <Link
+                    to="/profile"
+                    className="text-[#3CA6A6] hover:text-[#4FD1C5]"
+                  >
+                    My Profile
+                  </Link>
+                </div>
                 <button
                   onClick={handleLogOut}
                   className="w-full border border-[#4FD1C5] text-[#4FD1C5] py-2 rounded-lg font-semibold hover:bg-[#4FD1C5] hover:text-[#223A5E]"
