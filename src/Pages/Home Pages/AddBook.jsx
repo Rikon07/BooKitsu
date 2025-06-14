@@ -2,12 +2,11 @@ import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../Provider/AuthProvider';
-import { Helmet } from 'react-helmet';
 import Navbar from '../../Components/Main Components/Navbar';
 import Footer from '../../Components/Main Components/Footer';
 import Anime5 from "../../assets/Animations/Anime -5.json";
 import Lottie from "lottie-react";
-import { Tooltip } from "react-tooltip";
+import { motion } from "framer-motion";
 
 const AddBook = () => {
   const { user } = useContext(AuthContext);
@@ -43,12 +42,27 @@ const AddBook = () => {
     const content = form.content.value;
 
     if (!selectedImage) {
-      Swal.fire("Oops", "Please upload a book cover image!", "warning");
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops!',
+        text: 'Please upload a book cover image!',
+        background: '#D0E7F9',
+        color: '#223A5E',
+        confirmButtonColor: '#4FD1C5'
+      });
       return;
     }
 
     const imageUrl = await handleImageUpload(selectedImage);
-    if (!imageUrl) return Swal.fire("Failed", "Image upload failed", "error");
+    if (!imageUrl) {
+      return Swal.fire({
+        icon: 'error',
+        title: 'Image Upload Failed',
+        background: '#D0E7F9',
+        color: '#223A5E',
+        confirmButtonColor: '#4FD1C5'
+      });
+    }
 
     const bookData = {
       title,
@@ -61,10 +75,7 @@ const AddBook = () => {
       image: imageUrl,
       email: user.email,
       name: user.displayName,
-
     };
-
-    console.log(bookData);
 
     try {
       await axios.post("http://localhost:3000/books", bookData);
@@ -72,18 +83,24 @@ const AddBook = () => {
       setImagePreview(null);
       setSelectedImage(null);
       Swal.fire({
-        toast: true,
-        position: 'top-end',
         icon: 'success',
         title: 'Book added successfully!',
-        showConfirmButton: false,
-        timer: 2000,
         background: '#D0E7F9',
         color: '#223A5E',
+        confirmButtonColor: '#4FD1C5',
+        timer: 2000,
+        showConfirmButton: false,
       });
     } catch (error) {
       console.error(error);
-      Swal.fire("Error", "Something went wrong", "error");
+      Swal.fire({
+        icon: 'error',
+        title: 'Failed to add book',
+        text: 'Try again later.',
+        background: '#D0E7F9',
+        color: '#223A5E',
+        confirmButtonColor: '#4FD1C5'
+      });
     }
   };
 
@@ -96,50 +113,60 @@ const AddBook = () => {
   };
 
   return (
-    <div>
+    <div className='bg-[#D0E7F9] dark:bg-[#223A5E]'>
       <Navbar />
-      <div className="mt-16 cabin lg:mt-[74px] bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9]  px-4 lg:px-20">
-        {/* <Helmet>
-          <title>Add Book | BooKitsu</title>
-        </Helmet> */}
-        <div className='flex items-center justify-center'>
-            <h2 className="text-2xl lg:text-3xl font-bold  text-center text-[#4FD1C5]">Add a New Book</h2>
-        <div className="flex justify-center">
-            <Lottie animationData={Anime5} loop={true} className="w-32"  />
-          </div>
+      <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, ease: "easeInOut" }}
+      className="min-h-screen bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9] mt-16 mb-4"
+    >
+      <div className=" cabin px-4 lg:px-20">
+        <div className='flex items-center justify-center text-center mb-1'>
+          <h2 className="text-2xl lg:text-3xl font-bold text-[#4FD1C5]">
+            Add a New Book
+          </h2>
+          <Lottie animationData={Anime5} loop={true} className="w-32" />
         </div>
 
-        <div className="gap-4 items-start max-w-7xl mx-auto">
-          <form onSubmit={handleSubmit} className="lg:col-span-2 grid grid-cols-1 gap-4 bg-white dark:bg-[#1B314B] p-8 rounded-xl shadow-md">
+        <div className="max-w-6xl mx-auto">
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4 bg-white dark:bg-[#1B314B] p-8 rounded-xl shadow-md">
 
             <div>
               <label className="block mb-1 font-medium">Book Cover Image</label>
-              <input type="file" name="image" accept="image/*" onChange={handleImagePreview} required
-                className="file-input file-input-bordered w-full bg-[#D0E7F9] placeholder:text-[#223A5E] dark:placeholder:text-[#D0E7F9]" data-tip="Upload book image" />
-              <Tooltip place="top" type="dark" effect="solid" />
+              <input type="file" accept="image/*" onChange={handleImagePreview} required
+                className="file-input file-input-bordered w-full bg-[#D0E7F9] placeholder:text-[#223A5E]" />
               {imagePreview && <img src={imagePreview} alt="Preview" className="mt-4 rounded-lg max-h-48" />}
             </div>
 
             <div>
               <label className="block mb-1 font-medium">Book Title</label>
-              <input type="text" name="title" className="input input-bordered w-full bg-[#D0E7F9] placeholder:text-[#223A5E]" required placeholder="Book Title" />
+              <input type="text" name="title" required placeholder="Book Title"
+                className="input input-bordered w-full bg-[#D0E7F9] placeholder:text-[#223A5E]" />
             </div>
 
             <div>
               <label className="block mb-1 font-medium">Quantity</label>
-              <input type="number" name="quantity" className="input input-bordered w-full bg-[#D0E7F9] placeholder:text-[#223A5E]" required placeholder="Number of copies" />
+              <input type="number" name="quantity" required placeholder="Number of copies"
+                className="input input-bordered w-full bg-[#D0E7F9] placeholder:text-[#223A5E]" />
             </div>
 
             <div>
               <label className="block mb-1 font-medium">Author Name</label>
-              <input type="text" name="author" className="input input-bordered w-full bg-[#D0E7F9] placeholder:text-[#223A5E] " required placeholder="Author Name" />
+              <input type="text" name="author" required placeholder="Author Name"
+                className="input input-bordered w-full bg-[#D0E7F9] placeholder:text-[#223A5E]" />
             </div>
 
             <div>
               <label className="block mb-1 font-medium">Category</label>
-              <select name="category" className="select select-bordered cursor-pointer w-full bg-[#D0E7F9] text-[#223A5E]" required>
+              <select name="category" required
+                className="select select-bordered cursor-pointer w-full bg-[#D0E7F9] text-[#223A5E]">
                 <option disabled selected>Choose category</option>
-                {[ 'Arts & Music', 'Biographies', 'Business', 'Comics', 'Tech', 'Education', 'Entertainment', 'Health', 'Horror', 'Mystery', 'Kids', 'Religion', 'Novel', 'Thriller', 'History', 'Drama', 'Sci-Fi' ].map((cat, idx) => (
+                {[
+                  'Arts & Music', 'Biographies', 'Business', 'Comics', 'Tech', 'Education',
+                  'Entertainment', 'Health', 'Horror', 'Mystery', 'Kids', 'Religion',
+                  'Novel', 'Thriller', 'History', 'Drama', 'Sci-Fi'
+                ].map((cat, idx) => (
                   <option key={idx} value={cat}>{cat}</option>
                 ))}
               </select>
@@ -147,30 +174,36 @@ const AddBook = () => {
 
             <div>
               <label className="block mb-1 font-medium">Short Description</label>
-              <textarea name="description" rows="2" className="textarea textarea-bordered w-full bg-[#D0E7F9] placeholder:text-[#223A5E]" required placeholder="Enter a short summary"></textarea>
+              <textarea name="description" rows="2" required placeholder="Enter a short summary"
+                className="textarea textarea-bordered w-full bg-[#D0E7F9] placeholder:text-[#223A5E]" />
             </div>
 
             <div>
               <label className="block mb-1 font-medium">Rating (1-5)</label>
-              <input type="number" name="rating" min="1" max="5" step="0.1" className="input input-bordered w-full bg-[#D0E7F9] placeholder:text-[#223A5E]" required placeholder="Rating" />
+              <input type="number" name="rating" min="1" max="5" step="0.1" required placeholder="Rating"
+                className="input input-bordered w-full bg-[#D0E7F9] placeholder:text-[#223A5E]" />
             </div>
 
             <div>
               <label className="block mb-1 font-medium">Book Content</label>
-              <textarea name="content" rows="2" placeholder="Additional info or synopsis..." className="textarea textarea-bordered w-full bg-[#D0E7F9] placeholder:text-[#223A5E]" required></textarea>
+              <textarea name="content" rows="2" required placeholder="Additional info or synopsis..."
+                className="textarea textarea-bordered w-full bg-[#D0E7F9] placeholder:text-[#223A5E]" />
             </div>
 
-            <div className="text-center">
-              <button type="submit" className="bg-gradient-to-r from-[#4FD1C5] to-[#129990] text-white hover:text-[#223A5E] px-8 py-2 rounded-xl font-semibold hover:scale-101 transition">
+            <div className="text-center mt-4">
+              <button type="submit"
+                className="bg-gradient-to-r from-[#4FD1C5] to-[#129990] text-white hover:text-[#223A5E] px-8 py-2 rounded-xl font-semibold hover:scale-105 transition">
                 Add Book
               </button>
             </div>
-          </form>
 
-          
+          </form>
         </div>
       </div>
-      <Footer />
+
+      
+    </motion.div>
+    <Footer />
     </div>
   );
 };
