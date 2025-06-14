@@ -10,6 +10,7 @@ import Private from "../Provider/Private";
 import AllBooks from "../Pages/Home Pages/AllBooks";
 import AddBook from "../Pages/Home Pages/AddBook";
 import BorrowedBooks from "../Pages/Home Pages/BorrowedBooks";
+import UpdateBook from "../Pages/Other Pages/UpdateBook";
 
 const router = createBrowserRouter([
   {
@@ -30,13 +31,20 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/update-book/:id",
+        Component: () => (
+          <Private>
+            <UpdateBook />
+          </Private>
+        )
+      },
+      {
         path: "add-book",
-        // Component: () => (
-        //   <Private>
-        //     <AddBook />
-        //   </Private>
-        // ),
-        Component: AddBook,
+        Component: () => (
+          <Private>
+            <AddBook />
+          </Private>
+        ),
       },
       {
         path: "borrowed",

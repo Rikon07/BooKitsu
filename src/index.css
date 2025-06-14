@@ -2,6 +2,8 @@
 
 @import "tailwindcss";
 @plugin "daisyui";
+@import "@radix-ui/themes/styles.css";
+
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
@@ -48,7 +50,7 @@ button{
   @apply w-full px-4 py-2 rounded-lg bg-white/70 dark:bg-[#90e1ddfd] text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#4FD1C5];
 }
 
-input{
+.input{
     @apply text-[#223A5E]
 }
 textarea{
