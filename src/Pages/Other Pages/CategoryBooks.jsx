@@ -5,11 +5,24 @@ import Navbar from '../../Components/Main Components/Navbar';
 import Footer from '../../Components/Main Components/Footer';
 import { motion } from 'framer-motion';
 import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa';
-
+import { useNavigate } from 'react-router-dom';
 const CategoryBooks = () => {
   const { categoryName } = useParams();
   const [books, setBooks] = useState([]);
+    const navigate = useNavigate();
 
+const categories = [
+  'Arts & Music', 'Biographies', 'Business', 'Comics', 'Tech', 'Education',
+  'Entertainment', 'Health', 'Horror', 'Mystery', 'Kids', 'Religion',
+  'Novel', 'Thriller', 'History', 'Drama', 'Sci-Fi'
+];
+
+const handleCategoryChange = (e) => {
+  const selected = e.target.value;
+  if (selected && selected !== categoryName) {
+    navigate(`/category/${selected}`);
+  }
+};
   useEffect(() => {
     axios
       .get(`http://localhost:3000/books?category=${categoryName}`)
@@ -44,6 +57,26 @@ const CategoryBooks = () => {
         transition={{ duration: 0.5 }}
         className="max-w-[1440px] mx-auto min-h-[61vh] px-4 pb-12 pt-6 mt-16"
       >
+        <div className="mb-6 text-center">
+  <label className="text-lg font-semibold mr-2 text-[#223A5E] dark:text-[#D0E7F9]">
+    Show other categories:
+  </label>
+  <select
+    value={categoryName}
+    onChange={handleCategoryChange}
+    className="bg-[#64d1c6] cursor-pointer dark:bg-[#1B314B] border border-[#6C6E96] px-3 py-2 rounded-md text-sm"
+  >
+    <option value="" disabled>Select a category</option>
+    {categories.map((cat) => (
+  <option key={cat} value={cat}>
+    {cat === categoryName ? `${cat} (${books.length})` : cat}
+  </option>
+))}
+  </select>
+</div>
+
+
+
         <h2 className="text-3xl font-bold text-center mb-6 text-[#4FD1C5]">
           {categoryName} Books
         </h2>

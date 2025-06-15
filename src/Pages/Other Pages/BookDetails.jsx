@@ -39,34 +39,58 @@ const BookDetails = () => {
     }
   }, [id]);
 
-  const handleBorrow = () => {
-    if (!returnDate) return;
+ const handleBorrow = () => {
+  if (!returnDate) return;
 
-    axios
-      .post(`http://localhost:3000/borrow/${id}`, {
-        name: user?.displayName,
-        email: user?.email,
-        returnDate,
-      })
-      .then((res) => {
-        if (res.data.success) {
-          Swal.fire({
-            icon: "success",
-            title: "Borrowed Successfully!",
-            text: `Please return by ${returnDate}`,
-            confirmButtonColor: "#4FD1C5",
-          });
+  axios
+    .post(`http://localhost:3000/borrow/${id}`, {
+      name: user?.displayName,
+      email: user?.email,
+      returnDate,
+    })
+    .then((res) => {
+      if (res.data.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Borrowed Successfully!",
+          text: `Please return by ${returnDate}`,
+          confirmButtonColor: "#4FD1C5",
+        });
 
-          setBook(res.data.updatedBook);
+        setBook(res.data.updatedBook);
+        setIsBorrowed(true);
+        setShowModal(false);
+      }
+    })
+    .catch((err) => {
+      const errorMsg = err.response?.data?.message;
 
-          setShowModal(false);
-        }
-      })
-      .catch((err) => {
+      if (errorMsg === "You have already borrowed 3 books. Return one to borrow more.") {
+        Swal.fire({
+          icon: "warning",
+          title: "Limit Reached!",
+          text: "You can only borrow 3 books at a time. Please return one first.",
+          confirmButtonColor: "#4FD1C5",
+        });
+        setShowModal(false);
+      } else if (errorMsg === "Book not available to borrow.") {
+        Swal.fire({
+          icon: "info",
+          title: "Not Available",
+          text: "This book is currently out of stock.",
+          confirmButtonColor: "#4FD1C5",
+        });
+      } else {
         console.error(err);
-        Swal.fire({ icon: "error", title: "Something went wrong" });
-      });
-  };
+        Swal.fire({
+          icon: "error",
+          title: "Something went wrong",
+          confirmButtonColor: "#4FD1C5",
+        });
+      }
+    });
+};
+
 
   if (!book || checkingBorrowStatus) {
     return (

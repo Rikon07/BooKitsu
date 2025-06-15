@@ -53,8 +53,6 @@ const BorrowedBooks = () => {
         <Loader />{" "}
       </div>
     );
-  if (!borrowedBooks.length)
-    return <div className="text-center mt-10">You have no borrowed books.</div>;
 
   return (
     <div className="cabin bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9]">
@@ -63,6 +61,8 @@ const BorrowedBooks = () => {
         <h2 className="text-3xl font-bold mb-8 text-[#4FD1C5] text-center">
           Your Borrowed Books
         </h2>
+
+        {(!borrowedBooks.length && <div className="text-center mt-10">You have no borrowed books.</div>)}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {borrowedBooks.map(

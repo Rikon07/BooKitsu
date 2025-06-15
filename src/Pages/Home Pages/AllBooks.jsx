@@ -6,20 +6,26 @@ import Footer from '../../Components/Main Components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTable, FaThLarge, FaSyncAlt } from 'react-icons/fa';
 import { MdOutlineUpdate } from 'react-icons/md';
+import Loader from '../../Components/Main Components/Loader';
 
 const AllBooks = () => {
   const [books, setBooks] = useState([]);
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [viewMode, setViewMode] = useState('card');
   const [showAvailableOnly, setShowAvailableOnly] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios.get('http://localhost:3000/books')
       .then(res => {
         setBooks(res.data);
         setFilteredBooks(res.data);
+        setLoading(false);
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
   }, []);
   
 
@@ -31,11 +37,18 @@ const AllBooks = () => {
     }
   }, [showAvailableOnly, books]);
 
+  if (loading)
+      return (
+        <div>
+          <Loader />{" "}
+        </div>
+      );
+
   return (
     <div className="bg-[#D0E7F9] mt-16 dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9] min-h-screen cabin">
       <Navbar />
-      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-10">
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+      <div className="max-w-7xl mx-auto px-4 lg:px-8 py-6 lg:py-10">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-4 lg:mb-6">
           <button
             onClick={() => setShowAvailableOnly(!showAvailableOnly)}
             className="flex items-center gap-2 bg-[#4FD1C5] hover:bg-[#3BB8AC] text-white px-4 py-2 rounded shadow"
@@ -58,6 +71,15 @@ const AllBooks = () => {
               <FaTable /> Table View
             </button>
           </div>
+        </div>
+        <div>
+          {
+            showAvailableOnly ? (
+              <p className='mb-2 lg:text-lg text-[#1B314B] dark:text-[#4FD1C5]'>Available Books</p>
+            ) : (
+              <p className='mb-2 lg:text-lg text-[#1B314B] dark:text-[#4FD1C5]'>All Books</p>
+            )
+          }
         </div>
 
         <AnimatePresence mode="wait">
