@@ -36,13 +36,13 @@ const CategoryBooks = () => {
   };
 
   return (
-    <div className="bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9] min-h-screen">
+    <div className="bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9] cabin">
       <Navbar />
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="max-w-[1440px] mx-auto px-4 pb-12 pt-6 mt-16"
+        className="max-w-[1440px] mx-auto min-h-[61vh] px-4 pb-12 pt-6 mt-16"
       >
         <h2 className="text-3xl font-bold text-center mb-6 text-[#4FD1C5]">
           {categoryName} Books

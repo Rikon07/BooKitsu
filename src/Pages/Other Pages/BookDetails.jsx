@@ -1,63 +1,83 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { AuthContext } from '../../Provider/AuthProvider';
-import Navbar from '../../Components/Main Components/Navbar';
-import Footer from '../../Components/Main Components/Footer';
-import { motion } from 'framer-motion';
-import Swal from 'sweetalert2';
+import React, { useEffect, useState, useContext } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../../Provider/AuthProvider";
+import Navbar from "../../Components/Main Components/Navbar";
+import Footer from "../../Components/Main Components/Footer";
+import { motion } from "framer-motion";
+import Swal from "sweetalert2";
+import Loader from "../../Components/Main Components/Loader";
 
 const BookDetails = () => {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
   const [book, setBook] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [returnDate, setReturnDate] = useState('');
+  const [returnDate, setReturnDate] = useState("");
+  const [isBorrowed, setIsBorrowed] = useState(false);
+  const [checkingBorrowStatus, setCheckingBorrowStatus] = useState(true);
 
   useEffect(() => {
     axios
       .get(`http://localhost:3000/books/${id}`)
       .then((res) => setBook(res.data))
       .catch((err) => console.error(err));
+
+    if (user?.email) {
+      axios
+        .get(
+          `http://localhost:3000/borrowed/check?email=${user.email}&bookId=${id}`
+        )
+        .then((res) => {
+          setIsBorrowed(res.data.isBorrowed);
+          setCheckingBorrowStatus(false);
+        })
+        .catch((err) => {
+          console.error(err);
+          setCheckingBorrowStatus(false);
+        });
+    }
   }, [id]);
 
   const handleBorrow = () => {
-  if (!returnDate) return;
+    if (!returnDate) return;
 
-  axios
-    .post(`http://localhost:3000/borrow/${id}`, {
-      name: user?.displayName,
-      email: user?.email,
-      returnDate,
-    })
-    .then((res) => {
-      if (res.data.success) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Borrowed Successfully!',
-          text: `Please return by ${returnDate}`,
-          confirmButtonColor: '#4FD1C5',
-        });
+    axios
+      .post(`http://localhost:3000/borrow/${id}`, {
+        name: user?.displayName,
+        email: user?.email,
+        returnDate,
+      })
+      .then((res) => {
+        if (res.data.success) {
+          Swal.fire({
+            icon: "success",
+            title: "Borrowed Successfully!",
+            text: `Please return by ${returnDate}`,
+            confirmButtonColor: "#4FD1C5",
+          });
 
-        // 🔁 Update with returned quantity
-        setBook(res.data.updatedBook);
+          setBook(res.data.updatedBook);
 
-        console.log('✅ Updated Book:', res.data.updatedBook); // optional
+          setShowModal(false);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        Swal.fire({ icon: "error", title: "Something went wrong" });
+      });
+  };
 
-        setShowModal(false);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      Swal.fire({ icon: 'error', title: 'Something went wrong' });
-    });
-};
-
-
-  if (!book) return <div className="min-h-screen bg-[#D0E7F9] dark:bg-[#223A5E] text-center pt-20">Loading...</div>;
+  if (!book || checkingBorrowStatus) {
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
-    <div className="bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9] min-h-screen">
+    <div className="bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9] min-h-screen cabin">
       <Navbar />
       <motion.div
         initial={{ opacity: 0 }}
@@ -74,24 +94,32 @@ const BookDetails = () => {
           <div className="flex flex-col justify-between">
             <div>
               <h2 className="text-2xl font-bold mb-2">{book.title}</h2>
-              <p className="text-sm mb-1">Author: <span className="font-medium">{book.author}</span></p>
+              <p className="text-sm mb-1">
+                Author: <span className="font-medium">{book.author}</span>
+              </p>
               <p className="text-sm mb-1">Category: {book.category}</p>
               <p className="text-sm mb-1">Rating: {book.rating} / 5</p>
               <p className="text-sm mb-4">Quantity: {book.quantity}</p>
               <p className="text-sm mb-3">{book.description}</p>
               <p className="text-sm">{book.content}</p>
             </div>
-            <button
-              disabled={book.quantity === 0}
-              onClick={() => setShowModal(true)}
-              className={`mt-4 px-4 py-2 rounded-lg w-fit text-white transition-all ${
-                book.quantity > 0
-                  ? 'bg-[#4FD1C5] hover:bg-[#129990]'
-                  : 'bg-gray-400 cursor-not-allowed'
-              }`}
-            >
-              {book.quantity > 0 ? 'Borrow' : 'Not Available'}
-            </button>
+            {isBorrowed ? (
+              <p className="mt-4 text-sm text-red-600 dark:text-red-400 font-medium">
+                You have already borrowed this book.
+              </p>
+            ) : (
+              <button
+                disabled={book.quantity === 0}
+                onClick={() => setShowModal(true)}
+                className={`mt-4 px-4 py-2 rounded-lg w-fit text-white transition-all ${
+                  book.quantity > 0
+                    ? "bg-[#4FD1C5] hover:bg-[#129990]"
+                    : "bg-gray-400 cursor-not-allowed"
+                }`}
+              >
+                {book.quantity > 0 ? "Borrow" : "Not Available"}
+              </button>
+            )}
           </div>
         </div>
 
@@ -101,8 +129,18 @@ const BookDetails = () => {
             <div className="bg-white dark:bg-[#1B314B] p-6 rounded-xl w-full max-w-md text-[#223A5E] dark:text-[#D0E7F9]">
               <h3 className="text-xl font-bold mb-4">Borrow Book</h3>
               <div className="space-y-4">
-                <input type="text" value={user?.displayName} readOnly className="w-full p-2 rounded bg-gray-100 dark:bg-gray-800" />
-                <input type="email" value={user?.email} readOnly className="w-full p-2 rounded bg-gray-100 dark:bg-gray-800" />
+                <input
+                  type="text"
+                  value={user?.displayName}
+                  readOnly
+                  className="w-full p-2 rounded bg-gray-100 dark:bg-gray-800"
+                />
+                <input
+                  type="email"
+                  value={user?.email}
+                  readOnly
+                  className="w-full p-2 rounded bg-gray-100 dark:bg-gray-800"
+                />
                 <input
                   type="date"
                   value={returnDate}
@@ -111,8 +149,18 @@ const BookDetails = () => {
                 />
               </div>
               <div className="flex justify-end gap-2 mt-6">
-                <button onClick={() => setShowModal(false)} className="text-sm text-red-500">Cancel</button>
-                <button onClick={handleBorrow} className="bg-[#4FD1C5] text-white px-4 py-1 rounded">Confirm</button>
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="text-sm text-red-500"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleBorrow}
+                  className="bg-[#4FD1C5] text-white px-4 py-1 rounded"
+                >
+                  Confirm
+                </button>
               </div>
             </div>
           </div>
