@@ -22,31 +22,37 @@ const BookDetails = () => {
   }, [id]);
 
   const handleBorrow = () => {
-    if (!returnDate) return;
+  if (!returnDate) return;
 
-    axios
-      .post(`http://localhost:3000/borrow/${id}`, {
-        name: user?.displayName,
-        email: user?.email,
-        returnDate,
-      })
-      .then((res) => {
-        if (res.data.success) {
-          Swal.fire({
-            icon: 'success',
-            title: 'Borrowed Successfully!',
-            text: `Please return by ${returnDate}`,
-            confirmButtonColor: '#4FD1C5',
-          });
-          setBook((prev) => ({ ...prev, quantity: prev.quantity - 1 }));
-          setShowModal(false);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        Swal.fire({ icon: 'error', title: 'Something went wrong' });
-      });
-  };
+  axios
+    .post(`http://localhost:3000/borrow/${id}`, {
+      name: user?.displayName,
+      email: user?.email,
+      returnDate,
+    })
+    .then((res) => {
+      if (res.data.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Borrowed Successfully!',
+          text: `Please return by ${returnDate}`,
+          confirmButtonColor: '#4FD1C5',
+        });
+
+        // 🔁 Update with returned quantity
+        setBook(res.data.updatedBook);
+
+        console.log('✅ Updated Book:', res.data.updatedBook); // optional
+
+        setShowModal(false);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      Swal.fire({ icon: 'error', title: 'Something went wrong' });
+    });
+};
+
 
   if (!book) return <div className="min-h-screen bg-[#D0E7F9] dark:bg-[#223A5E] text-center pt-20">Loading...</div>;
 
@@ -57,7 +63,7 @@ const BookDetails = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="max-w-4xl mx-auto px-4 py-20"
+        className="mt-16 max-w-4xl mx-auto px-4 py-6 md:py-8 lg:py-10"
       >
         <div className="flex flex-col md:flex-row gap-6 bg-white dark:bg-[#1B314B] rounded-xl p-6 shadow-md">
           <img
@@ -72,7 +78,8 @@ const BookDetails = () => {
               <p className="text-sm mb-1">Category: {book.category}</p>
               <p className="text-sm mb-1">Rating: {book.rating} / 5</p>
               <p className="text-sm mb-4">Quantity: {book.quantity}</p>
-              <p className="text-sm">{book.description}</p>
+              <p className="text-sm mb-3">{book.description}</p>
+              <p className="text-sm">{book.content}</p>
             </div>
             <button
               disabled={book.quantity === 0}
@@ -90,7 +97,7 @@ const BookDetails = () => {
 
         {/* Modal */}
         {showModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-black/70 bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white dark:bg-[#1B314B] p-6 rounded-xl w-full max-w-md text-[#223A5E] dark:text-[#D0E7F9]">
               <h3 className="text-xl font-bold mb-4">Borrow Book</h3>
               <div className="space-y-4">

@@ -41,7 +41,7 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: "add-book",
+        path: "/add-book",
         Component: () => (
           <Private>
             <AddBook />
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "borrowed",
+        path: "/borrowed",
         Component: () => (
           <Private>
             <BorrowedBooks />

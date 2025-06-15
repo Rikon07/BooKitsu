@@ -77,7 +77,7 @@ const CategoryBooks = () => {
                 </div>
                 <div className="flex flex-col gap-2">
                   <span
-                    className={`px-3 py-1 rounded-full w-fit text-sm font-medium ${
+                    className={`px-3 py-1 rounded-full w-fit text-sm ${
                       book.quantity > 0
                         ? 'bg-green-200 text-green-800'
                         : 'bg-red-200 text-red-800'
@@ -86,7 +86,7 @@ const CategoryBooks = () => {
                     {book.quantity > 0 ? `Available - ${book.quantity}` : 'Not Available'}
                   </span>
 
-                  <Link to={`/books/${book._id}`} className="bg-gradient-to-br from-[#4FD1C5] to-[#129990] text-white text-sm px-4 py-1 rounded-xl text-center hover:scale-101 transition">
+                  <Link to={`/books/${book._id}`} className="bg-gradient-to-br from-[#4FD1C5] to-[#129990] text-white hover:bg-gradient-to-br hover:from-[#6C6E96] hover:to-[#4FD1C5] text-sm px-4 py-1 rounded-xl text-center hover:scale-101 transition">
                     Details
                   </Link>
                 </div>
