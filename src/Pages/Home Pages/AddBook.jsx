@@ -84,7 +84,7 @@ const AddBook = () => {
       setSelectedImage(null);
       Swal.fire({
         icon: 'success',
-        title: 'Book added successfully!',
+        title: `${bookData.title} Book added successfully!`,
         background: '#D0E7F9',
         color: '#223A5E',
         confirmButtonColor: '#4FD1C5',
