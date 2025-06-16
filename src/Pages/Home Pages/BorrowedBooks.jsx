@@ -5,6 +5,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import Navbar from "../../Components/Main Components/Navbar";
 import Footer from "../../Components/Main Components/Footer";
 import Loader from "../../Components/Main Components/Loader";
+import { Helmet } from "react-helmet";
 
 const BorrowedBooks = () => {
   const { user } = useContext(AuthContext);
@@ -15,7 +16,7 @@ const BorrowedBooks = () => {
     if (!user?.email) return;
 
     axios
-      .get(`http://localhost:3000/borrowed?email=${user.email}`)
+      .get(`https://bookitsu-server.vercel.app/borrowed?email=${user.email}`)
       .then((res) => {
         setBorrowedBooks(res.data);
         setLoading(false);
@@ -28,7 +29,7 @@ const BorrowedBooks = () => {
 
   const handleReturn = async (borrowId, bookId) => {
     try {
-      const res = await axios.post(`http://localhost:3000/return/${borrowId}`, {
+      const res = await axios.post(`https://bookitsu-server.vercel.app/return/${borrowId}`, {
         bookId,
       });
       if (res.data.success) {
@@ -56,6 +57,9 @@ const BorrowedBooks = () => {
 
   return (
     <div className="cabin bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9]">
+      <Helmet>
+        <title>Borrowed | BooKitsu</title>
+      </Helmet>
       <Navbar />
       <div className="max-w-[1440px] mx-auto min-h-[61vh] p-6 mt-16">
         <h2 className="text-3xl font-bold mb-8 text-[#4FD1C5] text-center">

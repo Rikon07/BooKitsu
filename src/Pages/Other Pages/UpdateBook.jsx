@@ -7,6 +7,7 @@ import 'react-tooltip/dist/react-tooltip.css';
 import Swal from 'sweetalert2';
 import Navbar from '../../Components/Main Components/Navbar';
 import Footer from '../../Components/Main Components/Footer';
+import { Helmet } from 'react-helmet';
 
 const UpdateBook = () => {
   const { id } = useParams();
@@ -15,7 +16,7 @@ const UpdateBook = () => {
   const [image, setImage] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/books/${id}`)
+    axios.get(`https://bookitsu-server.vercel.app/books/${id}`)
       .then(res => setBookData(res.data))
       .catch(err => console.error('Error loading book:', err));
   }, [id]);
@@ -40,7 +41,7 @@ const UpdateBook = () => {
     if (image) updatedBook.image = image;
 
     try {
-      await axios.patch(`http://localhost:3000/books/${id}`, updatedBook);
+      await axios.patch(`https://bookitsu-server.vercel.app/books/${id}`, updatedBook);
       Swal.fire({
         icon: 'success',
         title: 'Book updated!',
@@ -64,6 +65,9 @@ const UpdateBook = () => {
 
   return (
     <div className="bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9] mt-16 cabin min-h-screen">
+      <Helmet>
+        <title>Update Book | BooKitsu</title>
+      </Helmet>
       <Navbar />
       <div className="max-w-3xl mx-auto p-8">
         <h2 className="text-2xl font-bold mb-6">Update Book Info</h2>

@@ -38,9 +38,9 @@ const ForgetPass = () => {
 
   return (
     <div className="bg-gradient-to-br from-[#D0E7F9] to-[#4FD1C5] dark:bg-gradient-to-br dark:from-[#0f1c2e] dark:to-[#0f1c2e] min-h-screen flex flex-col">
-      {/* <Helmet>
+      <Helmet>
         <title>BooKitsu | Forgot Password</title>
-      </Helmet> */}
+      </Helmet>
       <MinimalHeader />
 
       {/* Floating Squares */}

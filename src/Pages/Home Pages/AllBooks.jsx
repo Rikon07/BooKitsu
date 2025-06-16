@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaTable, FaThLarge, FaSyncAlt } from 'react-icons/fa';
 import { MdOutlineUpdate } from 'react-icons/md';
 import Loader from '../../Components/Main Components/Loader';
+import { Helmet } from 'react-helmet';
 
 const AllBooks = () => {
   const [books, setBooks] = useState([]);
@@ -16,7 +17,7 @@ const AllBooks = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/books')
+    axios.get('https://bookitsu-server.vercel.app/books')
       .then(res => {
         setBooks(res.data);
         setFilteredBooks(res.data);
@@ -46,6 +47,9 @@ const AllBooks = () => {
 
   return (
     <div className="bg-[#D0E7F9] mt-16 dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9] min-h-screen cabin">
+      <Helmet>
+        <title>All Books | BooKitsu</title>
+      </Helmet>
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 lg:px-8 py-6 lg:py-10">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-4 lg:mb-6">

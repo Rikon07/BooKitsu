@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { useForm } from 'react-hook-form';
+import { Helmet } from 'react-helmet';
 
 const AddBook = () => {
   const { user } = useContext(AuthContext);
@@ -69,7 +70,7 @@ const AddBook = () => {
     };
 
     try {
-      await axios.post("http://localhost:3000/books", bookData);
+      await axios.post("https://bookitsu-server.vercel.app/books", bookData);
       reset();
       setImagePreview(null);
       setSelectedImage(null);
@@ -108,6 +109,9 @@ const AddBook = () => {
   return (
     <div className='bg-[#D0E7F9] dark:bg-[#223A5E]'>
       <Navbar />
+      <Helmet>
+        <title>Add Book | Bookitsu</title>
+      </Helmet>
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}

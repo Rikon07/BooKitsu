@@ -31,9 +31,9 @@ const Profile = () => {
 
   return (
     <div className="min-h-[90vh] cabin bg-[#D0E7F9] dark:bg-[#223A5E] transition-all duration-300 mt-16 lg:mt-[74px]">
-      {/* <Helmet>
-        <title>BooKitsu | Profile</title>
-      </Helmet> */}
+      <Helmet>
+        <title>Profile | BooKitsu</title>
+      </Helmet>
       <Navbar />
 
       <section className="max-w-xl min-h-[55vh] mx-auto mt-10 p-8 bg-[#F7FAFC]/50 dark:bg-[#2c4a79] shadow-2xl rounded-3xl font-poppins transition-all duration-300 relative mb-1">

@@ -89,9 +89,9 @@ const Register = () => {
 
   return (
     <div className="bg-gradient-to-br from-[#D0E7F9] to-[#4FD1C5] dark:bg-gradient-to-br dark:from-[#0f1c2e] dark:to-[#0f1c2e] pt-5 min-h-screen relative">
-      {/* <Helmet>
-        <title>Bookitsu | Register</title>
-      </Helmet> */}
+      <Helmet>
+        <title>Register | Bookitsu</title>
+      </Helmet>
       <MinimalHeader />
 
       <div className="absolute top-10 left-10 w-16 h-16 bg-white/20 dark:bg-[#4FD1C5]/20 rounded-lg animate-pulse"></div>

@@ -7,6 +7,7 @@ import Footer from "../../Components/Main Components/Footer";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import Loader from "../../Components/Main Components/Loader";
+import { Helmet } from "react-helmet";
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -19,14 +20,14 @@ const BookDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/books/${id}`)
+      .get(`https://bookitsu-server.vercel.app/books/${id}`)
       .then((res) => setBook(res.data))
       .catch((err) => console.error(err));
 
     if (user?.email) {
       axios
         .get(
-          `http://localhost:3000/borrowed/check?email=${user.email}&bookId=${id}`
+          `https://bookitsu-server.vercel.app/borrowed/check?email=${user.email}&bookId=${id}`
         )
         .then((res) => {
           setIsBorrowed(res.data.isBorrowed);
@@ -43,7 +44,7 @@ const BookDetails = () => {
   if (!returnDate) return;
 
   axios
-    .post(`http://localhost:3000/borrow/${id}`, {
+    .post(`https://bookitsu-server.vercel.app/borrow/${id}`, {
       name: user?.displayName,
       email: user?.email,
       returnDate,
@@ -102,6 +103,9 @@ const BookDetails = () => {
 
   return (
     <div className="bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9] min-h-screen cabin">
+      <Helmet>
+        <title>Book Details | BooKitsu</title>
+      </Helmet>
       <Navbar />
       <motion.div
         initial={{ opacity: 0 }}

@@ -4,6 +4,7 @@ import { BookOpen, LayoutDashboard, History, Scroll, BookMarked, Library, BrainC
 import { motion } from 'framer-motion';
 import Navbar from '../../Components/Main Components/Navbar';
 import Footer from '../../Components/Main Components/Footer';
+import { Helmet } from 'react-helmet';
 
 
 
@@ -28,6 +29,9 @@ const categories = [
 const AllCategories = () => {
   return (
     <div className="min-h-screen bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] ">
+        <Helmet>
+        <title>All Categories | Bookitsu</title>
+        </Helmet>
       <Navbar />
       <div className="cabin px-4 lg:px-20 py-20">
         <h2 className="dark:text-[#D0E7F9] text-3xl font-bold text-center mb-8">All Book Categories</h2>

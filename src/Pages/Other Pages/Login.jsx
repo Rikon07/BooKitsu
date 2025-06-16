@@ -61,9 +61,9 @@ const Login = () => {
 
   return (
     <div className="bg-gradient-to-br from-[#D0E7F9] to-[#4FD1C5] dark:bg-gradient-to-br dark:from-[#0f1c2e] dark:to-[#0f1c2e] pt-5 relative">
-      {/* <Helmet>
-        <title>RykHub | Login</title>
-      </Helmet> */}
+      <Helmet>
+        <title>Login | BooKitsu</title>
+      </Helmet>
 
       <MinimalHeader />
       {loading && <Loader />}

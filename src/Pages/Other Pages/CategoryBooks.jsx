@@ -6,6 +6,7 @@ import Footer from '../../Components/Main Components/Footer';
 import { motion } from 'framer-motion';
 import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 const CategoryBooks = () => {
   const { categoryName } = useParams();
   const [books, setBooks] = useState([]);
@@ -23,7 +24,7 @@ const handleCategoryChange = (e) => {
 };
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/books?category=${categoryName}`)
+      .get(`https://bookitsu-server.vercel.app/books?category=${categoryName}`)
       .then((res) => setBooks(res.data))
       .catch((err) => console.error(err));
   }, [categoryName]);
@@ -48,6 +49,9 @@ const handleCategoryChange = (e) => {
 
   return (
     <div className="bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9] cabin">
+      <Helmet>
+        <title>{categoryName} | BooKitsu</title>
+      </Helmet>
       <Navbar />
       <motion.div
         initial={{ opacity: 0 }}
