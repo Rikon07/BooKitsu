@@ -13,6 +13,7 @@ import BorrowedBooks from "../Pages/Home Pages/BorrowedBooks";
 import UpdateBook from "../Pages/Other Pages/UpdateBook";
 import CategoryBooks from "../Pages/Other Pages/CategoryBooks";
 import BookDetails from "../Pages/Other Pages/BookDetails";
+import AllCategories from "../Pages/Home Pages/AllCategories";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
             <BorrowedBooks />
           </Private>
         ),
+      },
+      {
+        path: "/all-categories",
+        Component: AllCategories,
       },
       {
         path: "/category/:categoryName",

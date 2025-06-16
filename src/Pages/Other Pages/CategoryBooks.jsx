@@ -12,9 +12,7 @@ const CategoryBooks = () => {
     const navigate = useNavigate();
 
 const categories = [
-  'Arts & Music', 'Biographies', 'Business', 'Comics', 'Tech', 'Education',
-  'Entertainment', 'Health', 'Horror', 'Mystery', 'Kids', 'Religion',
-  'Novel', 'Thriller', 'History', 'Drama', 'Sci-Fi'
+  'Tech', 'Education', 'Sci-Fi', 'Comics', 'Biographies', 'Business',  'Entertainment', 'Health', 'Horror', 'Mystery', 'Kids', 'Religion', 'Novel', 'Thriller', 'History', 'Drama'
 ];
 
 const handleCategoryChange = (e) => {

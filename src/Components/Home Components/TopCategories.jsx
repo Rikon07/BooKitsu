@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, LayoutDashboard, History, Scroll, BookMarked, Library } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { ArrowRightCircle } from 'lucide-react';
+
+
 
 const categories = [
   {
@@ -42,6 +45,14 @@ const TopCategories = () => {
       <h2 className="text-3xl font-bold text-center text-[#223A5E] dark:text-[#D0E7F9] mb-5 flex items-center justify-center gap-2">
         <Library /> Top Book Categories
       </h2>
+
+      <div className="text-right max-w-7xl mx-auto mb-6">
+  <Link to="/all-categories">
+    <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#4FD1C5] hover:bg-[#38b2ac] text-white font-semibold transition">
+      All Categories <ArrowRightCircle size={20} />
+    </button>
+  </Link>
+</div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
         {categories.map((cat, index) => (
