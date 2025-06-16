@@ -10,6 +10,9 @@ import Loader from "../../Components/Main Components/Loader";
 import { Helmet } from "react-helmet";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import useAxiosSecure from "../../Hooks/AxiosSecure";
+
+
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -19,38 +22,37 @@ const BookDetails = () => {
   const [returnDate, setReturnDate] = useState("");
   const [isBorrowed, setIsBorrowed] = useState(false);
   const [checkingBorrowStatus, setCheckingBorrowStatus] = useState(true);
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
-    axios
-      .get(`https://bookitsu-server.vercel.app/books/${id}`)
-      .then((res) => setBook(res.data))
-      .catch((err) => console.error(err));
+  axiosSecure
+    .get(`/books/${id}`)
+    .then((res) => setBook(res.data))
+    .catch((err) => console.error(err));
 
-    if (user?.email) {
-      axios
-        .get(
-          `https://bookitsu-server.vercel.app/borrowed/check?email=${user.email}&bookId=${id}`
-        )
-        .then((res) => {
-          setIsBorrowed(res.data.isBorrowed);
-          setCheckingBorrowStatus(false);
-        })
-        .catch((err) => {
-          console.error(err);
-          setCheckingBorrowStatus(false);
-        });
-    }
-  }, [id]);
+  if (user?.email) {
+    axiosSecure
+      .get(`/borrowed/check?email=${user.email}&bookId=${id}`)
+      .then((res) => {
+        setIsBorrowed(res.data.isBorrowed);
+        setCheckingBorrowStatus(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setCheckingBorrowStatus(false);
+      });
+  }
+}, [id, user?.email, axiosSecure]);
 
   const handleBorrow = () => {
     if (!returnDate) return;
 
-    axios
-      .post(`https://bookitsu-server.vercel.app/borrow/${id}`, {
-        name: user?.displayName,
-        email: user?.email,
-        returnDate,
-      })
+   axiosSecure
+    .post(`/borrow/${id}`, {
+      name: user?.displayName,
+      email: user?.email,
+      returnDate,
+    })
       .then((res) => {
         if (res.data.success) {
           Swal.fire({
