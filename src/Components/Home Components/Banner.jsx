@@ -101,17 +101,17 @@ const Banner = () => {
                     delaySpeed={2000}
                   />
                 </h1>
-                <p className="text-lg md:text-xl mb-6 max-w-2xl mx-auto">
+                <p className="text-lg md:text-xl mb-4 max-w-2xl mx-auto">
                   {slide.desc}
                 </p>
                 <Link to="/all-books">
-                  <button className="text-white px-8 py-3 rounded-full font-semibold transition-all bg-gradient-to-b from-[#4FD1C5] to-[#223A5E] shadow-lg hover:shadow-xl hover:bg-gradient-to-b hover:from-[#223A5E] hover:to-[#4FD1C5]">
+                  <button className="text-white text-sm lg:text-base px-8 py-2 rounded-full font-semibold transition-all bg-gradient-to-b from-[#4FD1C5] to-[#223A5E] shadow-lg hover:shadow-xl hover:bg-gradient-to-b hover:from-[#223A5E] hover:to-[#4FD1C5]">
                     Explore Books
                   </button>
                 </Link>
               </Fade>
 
-              <div className="w-48 mx-auto opacity-50 mt-8">
+              <div className="w-32 md:w-48 mx-auto opacity-50 mt-8">
                 <Lottie animationData={slide.animation} loop autoplay />
               </div>
             </div>

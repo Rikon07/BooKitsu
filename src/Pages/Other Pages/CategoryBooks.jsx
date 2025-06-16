@@ -97,7 +97,7 @@ const CategoryBooks = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
           {loading ? (
-            Array.from({ length: books.length }).map((_, idx) => (
+            Array.from({ length: 3 }).map((_, idx) => (
               <div key={idx} className="flex bg-white dark:bg-[#1B314B] rounded-xl shadow-lg overflow-hidden p-4">
                 <Skeleton height={248} width={180} className="rounded-md" />
                 <div className="ml-4 flex flex-col justify-between flex-grow">
@@ -126,7 +126,7 @@ const CategoryBooks = () => {
                   alt={book.title}
                   className="h-[248px] aspect-[3/4] object-cover"
                 />
-                <div className="flex flex-col p-6 md:w-2/3 justify-between">
+                <div className="flex flex-col p-5 md:w-2/3 justify-between">
                   <div>
                     <h3 className="text-xl font-bold mb-2 text-[#223A5E] dark:text-[#D0E7F9]">
                       {book.title}
@@ -134,9 +134,9 @@ const CategoryBooks = () => {
                     <p className="text-sm mb-2 text-[#6C6E96] dark:text-[#D0E7F9]">
                       Author: <span className="font-medium">{book.author}</span>
                     </p>
-                    <p className="text-sm mb-2 text-[#6C6E96] dark:text-[#D0E7F9]">
+                    {/* <p className="text-sm mb-2 text-[#6C6E96] dark:text-[#D0E7F9]">
                       Category: {book.category}
-                    </p>
+                    </p> */}
                     <div className="mb-2">
                       {renderStars(book.rating)}
                     </div>

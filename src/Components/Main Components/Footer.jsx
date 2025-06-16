@@ -7,7 +7,7 @@ const Footer = () => {
 
     useEffect(() => {
     Aos.init({
-      duration: 800,
+      duration: 500,
       once: true,
     });
   }, []);
@@ -30,8 +30,8 @@ const Footer = () => {
           <h3 className="text-xl font-semibold mb-4">Explore</h3>
           <ul className="space-y-2 text-sm">
             <li><Link to="/" className="hover:text-[#4FD1C5] transition">Home</Link></li>
+            <li><Link to="/all-categories" className="hover:text-[#4FD1C5] transition">Categories</Link></li>
             <li><Link to="/all-books" className="hover:text-[#4FD1C5] transition">All Books</Link></li>
-            <li><Link to="/add-book" className="hover:text-[#4FD1C5] transition">Add Book</Link></li>
             <li><Link to="/borrowed" className="hover:text-[#4FD1C5] transition">Borrowed Books</Link></li>
           </ul>
         </div>
@@ -49,19 +49,6 @@ const Footer = () => {
 
         <div>
           <h3 className="text-xl font-semibold mb-4">Stay Updated</h3>
-          {/* <p className="text-sm text-[#3C4A61] dark:text-[#B0C4DE] mb-2">
-            Join our newsletter for the latest updates.
-          </p> */}
-          {/* <form className="flex flex-col gap-2">
-            <input
-              type="email"
-              placeholder="Your email"
-              className="px-3 py-2 rounded bg-white dark:bg-[#1A2A3F] text-[#223A5E] dark:text-[#D0E7F9] border border-[#4FD1C5] focus:outline-none"
-            />
-            <button className="bg-[#4FD1C5] text-[#223A5E] font-semibold py-2 rounded hover:bg-[#3CA6A6] hover:text-[#F7FAFC] transition">
-              Subscribe
-            </button>
-          </form> */}
           <div className="flex gap-4 mt-4 text-2xl">
             <a href="https://www.facebook.com/programmingHero" target="_blank" rel="noopener noreferrer" className="hover:text-[#4FD1C5] transition" data-aos="zoom-in">
               <FaFacebook />

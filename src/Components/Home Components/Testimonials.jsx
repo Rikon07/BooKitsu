@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Marquee from "react-fast-marquee";
-import { Star } from "lucide-react";
+import { Book, Star } from "lucide-react";
 import { motion } from "framer-motion";
 const Testimonials = () => {
 
@@ -76,8 +76,8 @@ const Testimonials = () => {
       viewport={{ once: true }}
       className="bg-[#D0E7F9] dark:bg-[#223A5E] drop-shadow-lg py-6 px-4 max-w-[1440px] mx-auto "
     >
-      <h2 className="text-3xl font-bold text-[#4FD1C5] mb-6 text-center">
-        📚 Testimonials
+      <h2 className="text-3xl flex justify-center items-center gap-2 font-bold text-[#4FD1C5] mb-6 text-center">
+        <Book/> Testimonials
       </h2>
       <Marquee direction="right" pauseOnHover gradient={false} speed={40}>
         {reviews.map((review, idx) => (

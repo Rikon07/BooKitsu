@@ -29,11 +29,11 @@ const DidYouKnow = () => {
         </div>
         <p className="mb-8 text-sm text-[#6C6E96] dark:text-[#BCD4CC]">Fun book facts and reading tips to keep you inspired 📚</p>
 
-        <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-4 lg:gap-6">
           {facts.map((fact, index) => (
             <motion.div
               key={index}
-              className="bg-white dark:bg-[#284569] rounded-lg shadow-md p-6 flex items-start gap-3"
+              className="bg-white dark:bg-[#284569] rounded-lg shadow-md p-4 md:p-6 flex items-start gap-3"
               whileHover={{ scale: 1.03 }}
               transition={{ type: "spring", stiffness: 300 }}
             >

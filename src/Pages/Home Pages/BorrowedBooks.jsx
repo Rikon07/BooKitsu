@@ -6,17 +6,23 @@ import Navbar from "../../Components/Main Components/Navbar";
 import Footer from "../../Components/Main Components/Footer";
 import Loader from "../../Components/Main Components/Loader";
 import { Helmet } from "react-helmet";
+import useAxiosSecure from "../../Hooks/AxiosSecure";
+
 
 const BorrowedBooks = () => {
   const { user } = useContext(AuthContext);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const axiosSecure = useAxiosSecure();
+
+   // console.log(user.accessToken);
+  // console.log(token);
 
   useEffect(() => {
     if (!user?.email) return;
 
-    axios
-      .get(`https://bookitsu-server.vercel.app/borrowed?email=${user.email}`)
+    axiosSecure
+      .get(`/borrowed?email=${user.email}`)
       .then((res) => {
         setBorrowedBooks(res.data);
         setLoading(false);
@@ -25,13 +31,11 @@ const BorrowedBooks = () => {
         console.error(err);
         setLoading(false);
       });
-  }, [user]);
+  }, [user, axiosSecure]);
 
   const handleReturn = async (borrowId, bookId) => {
     try {
-      const res = await axios.post(`https://bookitsu-server.vercel.app/return/${borrowId}`, {
-        bookId,
-      });
+      const res = await axiosSecure.post(`/return/${borrowId}`, { bookId });
       if (res.data.success) {
         Swal.fire({
           icon: "success",
@@ -48,12 +52,7 @@ const BorrowedBooks = () => {
     }
   };
 
-  if (loading)
-    return (
-      <div>
-        <Loader />{" "}
-      </div>
-    );
+  if (loading) return <Loader />;
 
   return (
     <div className="cabin bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9]">
