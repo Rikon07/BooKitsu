@@ -6,7 +6,8 @@ import Footer from '../../Components/Main Components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTable, FaThLarge, FaSyncAlt } from 'react-icons/fa';
 import { MdOutlineUpdate } from 'react-icons/md';
-import Loader from '../../Components/Main Components/Loader';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import { Helmet } from 'react-helmet';
 
 const AllBooks = () => {
@@ -28,7 +29,6 @@ const AllBooks = () => {
         setLoading(false);
       });
   }, []);
-  
 
   useEffect(() => {
     if (showAvailableOnly) {
@@ -37,13 +37,6 @@ const AllBooks = () => {
       setFilteredBooks(books);
     }
   }, [showAvailableOnly, books]);
-
-  if (loading)
-      return (
-        <div>
-          <Loader />{" "}
-        </div>
-      );
 
   return (
     <div className="bg-[#D0E7F9] mt-16 dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9] min-h-screen cabin">
@@ -76,6 +69,7 @@ const AllBooks = () => {
             </button>
           </div>
         </div>
+
         <div>
           {
             showAvailableOnly ? (
@@ -86,83 +80,102 @@ const AllBooks = () => {
           }
         </div>
 
-        <AnimatePresence mode="wait">
-          {viewMode === 'card' ? (
-            <motion.div
-              key="card"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
-              {filteredBooks.map(book => (
-                <motion.div
-                  key={book._id}
-                  whileHover={{ scale: 1.01 }}
-                  className="bg-white dark:bg-[#1B314B] p-4 rounded-lg shadow-lg flex flex-col "
-                >
-                  <div className='flex items-center justify-between gap-3'>
-                    <img src={book.image} alt={book.title} className="h-[250px] object-cover rounded-md mx-auto mb-4 w-40" />
-                  <div className="flex-1 overflow-ellipsis">
-                    <h3 className="text-xl font-semibold mb-2">{book.title}</h3>
-                    <p className="text-sm mb-2">By: {book.author}</p>
-                    <p className="text-sm mb-2">Category: {book.category}</p>
-                    <p className="text-sm mb-2">Rating: {book.rating}</p>
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <div key={index} className="bg-white dark:bg-[#1B314B] p-4 rounded-lg shadow-lg flex flex-col">
+                <div className='flex items-center justify-between gap-3'>
+                  <Skeleton height={240} width={160} className="mb-4" />
+                  <div className="flex-1">
+                    <Skeleton height={24} width={`80%`} className="mb-2" />
+                    <Skeleton height={20} width={`60%`} className="mb-1" />
+                    <Skeleton height={20} width={`50%`} className="mb-1" />
+                    <Skeleton height={20} width={`40%`} className="mb-1" />
                   </div>
-                  </div>
-                  <Link
-                    to={`/update-book/${book._id}`}
-                    className="mt-4 inline-flex items-center justify-center gap-1 bg-[#4FD1C5] hover:bg-[#3BB8AC] text-white px-4 py-2 rounded"
+                </div>
+                <Skeleton height={36} width={`40%`} className="mt-4" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <AnimatePresence mode="wait">
+            {viewMode === 'card' ? (
+              <motion.div
+                key="card"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+              >
+                {filteredBooks.map(book => (
+                  <motion.div
+                    key={book._id}
+                    whileHover={{ scale: 1.01 }}
+                    className="bg-white dark:bg-[#1B314B] p-4 rounded-lg shadow-lg flex flex-col "
                   >
-                    <MdOutlineUpdate className="text-lg" /> Update
-                  </Link>
-                </motion.div>
-              ))}
-            </motion.div>
-          ) : (
-            <motion.div
-              key="table"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              className="overflow-x-auto"
-            >
-              <table className="table w-full">
-                <thead className="bg-[#4FD1C5] text-white">
-                  <tr>
-                    <th>Cover</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Category</th>
-                    <th>Rating</th>
-                    <th>Quantity</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredBooks.map(book => (
-                    <tr key={book._id} className="bg-white dark:bg-[#1B314B]">
-                      <td><img src={book.image} alt={book.title} className="h-16 w-12 object-cover rounded" /></td>
-                      <td>{book.title}</td>
-                      <td>{book.author}</td>
-                      <td>{book.category}</td>
-                      <td>{book.rating}</td>
-                      <td>{book.quantity}</td>
-                      <td>
-                        <Link
-                          to={`/update-book/${book._id}`}
-                          className="flex items-center gap-1 bg-[#4FD1C5] text-white px-3 py-1 rounded hover:bg-[#3BB8AC]"
-                        >
-                          <MdOutlineUpdate /> Update
-                        </Link>
-                      </td>
+                    <div className='flex items-center justify-between gap-3'>
+                      <img src={book.image} alt={book.title} className="h-[250px] object-cover rounded-md mx-auto mb-4 w-40" />
+                      <div className="flex-1 overflow-ellipsis">
+                        <h3 className="text-xl font-semibold mb-2">{book.title}</h3>
+                        <p className="text-sm mb-2">By: {book.author}</p>
+                        <p className="text-sm mb-2">Category: {book.category}</p>
+                        <p className="text-sm mb-2">Rating: {book.rating}</p>
+                      </div>
+                    </div>
+                    <Link
+                      to={`/update-book/${book._id}`}
+                      className="mt-4 inline-flex items-center justify-center gap-1 bg-[#4FD1C5] hover:bg-[#3BB8AC] text-white px-4 py-2 rounded"
+                    >
+                      <MdOutlineUpdate className="text-lg" /> Update
+                    </Link>
+                  </motion.div>
+                ))}
+              </motion.div>
+            ) : (
+              <motion.div
+                key="table"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                className="overflow-x-auto"
+              >
+                <table className="table w-full">
+                  <thead className="bg-[#4FD1C5] text-white">
+                    <tr>
+                      <th>Cover</th>
+                      <th>Title</th>
+                      <th>Author</th>
+                      <th>Category</th>
+                      <th>Rating</th>
+                      <th>Quantity</th>
+                      <th>Action</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                  </thead>
+                  <tbody>
+                    {filteredBooks.map(book => (
+                      <tr key={book._id} className="bg-white dark:bg-[#1B314B]">
+                        <td><img src={book.image} alt={book.title} className="h-16 w-12 object-cover rounded" /></td>
+                        <td>{book.title}</td>
+                        <td>{book.author}</td>
+                        <td>{book.category}</td>
+                        <td>{book.rating}</td>
+                        <td>{book.quantity}</td>
+                        <td>
+                          <Link
+                            to={`/update-book/${book._id}`}
+                            className="flex items-center gap-1 bg-[#4FD1C5] text-white px-3 py-1 rounded hover:bg-[#3BB8AC]"
+                          >
+                            <MdOutlineUpdate /> Update
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        )}
       </div>
       <Footer />
     </div>
