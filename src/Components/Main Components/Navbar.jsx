@@ -118,7 +118,7 @@ const Navbar = () => {
           : "bg-[#D0E7F9] dark:bg-[#223A5E]"
       }`}
     >
-      <div className="max-w-[1440px] mx-auto px-6 md:px-8 lg-px-1 py-4 rounded-t-lg shadow-md flex items-center justify-between">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-8 lg-px-1 py-[18px] rounded-t-lg shadow-md flex items-center justify-between">
         {/* Logo  */}
       <Link
         to="/"

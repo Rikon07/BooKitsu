@@ -27,17 +27,17 @@ const FAQ = () => {
   };
 
   return (
-    <div className="py-6 cabin border-t-1 border-t-[#4FD1C5]/20 bg-[#D0E7F9] dark:bg-[#223A5E]">
-        <div className=" text-[#223A5E] dark:text-[#D0E7F9] rounded-2xl max-w-5xl mx-auto ">
-      <h2 className="text-3xl font-bold text-center mb-6 text-[#4FD1C5]">Frequently Asked Questions</h2>
+    <div className="py-6 px-6 xl:pb-16 cabin border-t-1 border-t-[#4FD1C5]/20 bg-[#D0E7F9] dark:bg-[#223A5E]">
+        <div className=" text-[#223A5E] dark:text-[#D0E7F9] rounded-2xl max-w-[1435px] mx-auto ">
+      <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-[#4FD1C5]">Frequently Asked Questions</h2>
       <div className="space-y-4">
         {faqData.map((item, index) => (
           <div key={index} className="border border-[#4FD1C5] rounded-xl overflow-hidden">
             <button
               onClick={() => toggleAccordion(index)}
-              className="w-full flex items-center justify-between px-5 py-1 bg-white dark:bg-[#284569] hover:bg-[#4FD1C5]/10 transition duration-300"
+              className="w-full flex items-center justify-between px-5 py-1 xl:px-12 bg-white dark:bg-[#284569] hover:bg-[#4FD1C5]/10 transition duration-300"
             >
-              <span className="font-semibold text-lg text-left">{item.question}</span>
+              <span className="font-semibold text-base md:text-lg text-left">{item.question}</span>
               <ChevronDown
                 className={`transition-transform duration-300 ${
                   openIndex === index ? "rotate-180" : ""

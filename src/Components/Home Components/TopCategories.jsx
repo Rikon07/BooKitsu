@@ -42,11 +42,11 @@ const categories = [
 const TopCategories = () => {
   return (
     <section className="py-12 cabin px-4 lg:px-20 bg-[#D0E7F9] dark:bg-[#223A5E]">
-      <h2 className="text-3xl font-bold text-center text-[#223A5E] dark:text-[#D0E7F9] mb-5 flex items-center justify-center gap-2">
+      <h2 className="text-2xl md:text-3xl font-bold text-center text-[#223A5E] dark:text-[#D0E7F9] mb-5 flex items-center justify-center gap-2">
         <Library /> Top Book Categories
       </h2>
 
-      <div className="text-right max-w-7xl mx-auto mb-4">
+      <div className="text-right max-w-[1440px] px-2 mx-auto mb-4">
   <Link to="/all-categories">
     <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#4FD1C5] hover:bg-[#38b2ac] text-white font-semibold text-xs md:text-sm transition">
       All Categories <ArrowRightCircle size={20} />
@@ -54,7 +54,7 @@ const TopCategories = () => {
   </Link>
 </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-6 xl:gap-8 max-w-[1435px] mx-auto">
         {categories.map((cat, index) => (
           <motion.div
             key={cat.name}

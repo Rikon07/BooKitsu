@@ -23,7 +23,7 @@ const DidYouKnow = () => {
         viewport={{ once: true }}
         className="max-w-[1440px] mx-auto text-center"
       >
-        <div className="flex justify-center items-center gap-3 mb-4 text-2xl text-[#4FD1C5]">
+        <div className="flex justify-center items-center gap-3 mb-4 text-2xl md:text-3xl text-[#4FD1C5]">
           <FaLightbulb />
           <h2 className="font-bold tracking-wide">Did You Know?</h2>
         </div>

@@ -13,9 +13,10 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9] px-6 md:px-12 lg:px-32 py-6 md:py-10 cabin border-t border-[#4FD1C5]/20">
-      <div className="mx-auto grid grid-cols-1 md:grid-cols-4 gap-10" data-aos="fade-up">
-        <div>
+    <div className="bg-[#D0E7F9] dark:bg-[#223A5E] border-t border-[#4FD1C5]/20">
+      <footer className="max-w-[1440px] mx-auto bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9] pt-6 md:pt-10 cabin ">
+      <div className="mx-auto px-6 xl:px-2 grid grid-cols-1 md:grid-cols-4 gap-10" data-aos="fade-up">
+        <div className="text-center md:text-left ">
           <Link to="/" className="text-xl md:text-2xl font-bold qyore tracking-wide text-[#223A5E] dark:text-[#D0E7F9] drop-shadow-sm dark:drop-shadow-[0_0_10px_#4FD1C5]">
             BooKitsu
           </Link>
@@ -69,11 +70,14 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Copyright */}
-      <div className="border-t border-[#4FD1C5] text-center text-xs mt-10 text-[#3C4A61] dark:text-[#8FA2BF] pt-4">
+      
+      
+    </footer>
+    {/* Bottom Copyright */}
+    <div className="border-t border-[#4FD1C5] text-center text-xs mt-10 text-[#3C4A61] dark:text-[#8FA2BF] pt-4 pb-10">
         &copy; {new Date().getFullYear()} BooKitsu. All rights reserved.
       </div>
-    </footer>
+    </div>
   );
 };
 
