@@ -74,7 +74,7 @@ const Navbar = () => {
   }, [location.pathname]);
 
   const navLinkStyle = ({ isActive }) =>
-    `transition-colors duration-200 hover:text-[#4FD1C5] ${
+    `transition-colors text-base duration-200 hover:text-[#4FD1C5] ${
       isActive ? "font-bold underline underline-offset-4 text-[#4FD1C5]" : ""
     }`;
 
@@ -90,11 +90,15 @@ const Navbar = () => {
           All Books
         </NavLink>
       </li>
-      <li>
-        <NavLink to="/add-book" className={navLinkStyle}>
-          Add Book
-        </NavLink>
-      </li>
+      {
+        user && (
+          <li>
+            <NavLink to="/add-book" className={navLinkStyle}>
+              Add Book
+            </NavLink>
+          </li>
+        )
+      }
       <li>
         <NavLink to="/borrowed" className={navLinkStyle}>
           Borrowed Books
@@ -107,14 +111,15 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -50 }}
       animate={{ y: 0 }}
-      transition={{ type: "spring", stiffness: 60 }}
-      className={`cabin fixed z-50 top-0 left-1/2 -translate-x-1/2 w-full px-6 md:px-10 lg:px-14 xl:px-18 py-4 rounded-lg shadow-md flex items-center justify-between transition-all duration-300 ${
+      transition={{ type: "spring", stiffness: 90 }}
+      className={`cabin fixed z-50 top-0 left-1/2 -translate-x-1/2 w-full  transition-all duration-300 ${
         scrolled
           ? "bg-[#D0E7F9]/20 dark:bg-[#223A5E]/20 backdrop-blur-xl"
           : "bg-[#D0E7F9] dark:bg-[#223A5E]"
       }`}
     >
-      {/* Logo  */}
+      <div className="max-w-[1440px] mx-auto px-6 md:px-8 lg-px-1 py-4 rounded-t-lg shadow-md flex items-center justify-between">
+        {/* Logo  */}
       <Link
         to="/"
         className="text-2xl font-bold flex items-center gap-1 qyore tracking-wide text-[#223A5E] dark:text-[#D0E7F9] transition"
@@ -259,6 +264,7 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
     </motion.nav>
   );
 };

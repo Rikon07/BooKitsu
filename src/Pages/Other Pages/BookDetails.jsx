@@ -205,7 +205,7 @@ const BookDetails = () => {
                 </button>
                 <button
                   onClick={handleBorrow}
-                  className="bg-[#4FD1C5] text-white px-4 py-1 rounded"
+                  className="bg-[#4FD1C5] hover:bg-cyan-600 text-white px-4 py-1 rounded"
                 >
                   Confirm
                 </button>
