@@ -17,6 +17,18 @@ const AllBooks = () => {
   const [showAvailableOnly, setShowAvailableOnly] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  // pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = viewMode === 'card' ? 6 : 8;
+  const totalPages = Math.ceil(filteredBooks.length / itemsPerPage);
+
+  // slice books for current page
+  const paginatedBooks = filteredBooks.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   useEffect(() => {
     axios.get('https://bookitsu-server.vercel.app/books')
       .then(res => {
@@ -36,16 +48,21 @@ const AllBooks = () => {
     } else {
       setFilteredBooks(books);
     }
+    setCurrentPage(1); // reset to first page after filter
   }, [showAvailableOnly, books]);
 
+  useEffect(() => {
+    setCurrentPage(1); // reset page when switching view mode
+  }, [viewMode]);
+
   return (
-    <div className="bg-[#D0E7F9] mt-16 dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9] min-h-screen cabin">
+    <div className="bg-[#D0E7F9] mt-14 dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9] min-h-screen cabin">
       <Helmet>
         <title>All Books | BooKitsu</title>
       </Helmet>
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 lg:px-8 py-6 lg:py-10">
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-4 lg:mb-6">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-3">
           <button
             onClick={() => setShowAvailableOnly(!showAvailableOnly)}
             className="flex items-center gap-2 bg-[#4FD1C5] hover:bg-[#3BB8AC] text-white px-4 py-2 rounded shadow"
@@ -70,12 +87,13 @@ const AllBooks = () => {
           </div>
         </div>
 
-        <div>
+        <div className="mb-2">
+          <span className="text-sm mb-2">Now showing: </span>
           {
             showAvailableOnly ? (
-              <p className='mb-2 lg:text-lg text-[#1B314B] dark:text-[#4FD1C5]'>Available Books</p>
+              <span className='mb-2 lg:text-lg text-[#1B314B] dark:text-[#4FD1C5]'>Available Books</span>
             ) : (
-              <p className='mb-2 lg:text-lg text-[#1B314B] dark:text-[#4FD1C5]'>All Books</p>
+              <span className='mb-2 lg:text-lg text-[#1B314B] dark:text-[#4FD1C5]'>All Books</span>
             )
           }
         </div>
@@ -107,7 +125,7 @@ const AllBooks = () => {
                 exit={{ opacity: 0, scale: 0.95 }}
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
               >
-                {filteredBooks.map(book => (
+                {paginatedBooks.map(book => (
                   <motion.div
                     key={book._id}
                     whileHover={{ scale: 1.01 }}
@@ -152,7 +170,7 @@ const AllBooks = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredBooks.map(book => (
+                    {paginatedBooks.map(book => (
                       <tr key={book._id} className="bg-white dark:bg-[#1B314B]">
                         <td><img src={book.image} alt={book.title} className="h-16 w-12 object-cover rounded" /></td>
                         <td>{book.title}</td>
@@ -175,6 +193,35 @@ const AllBooks = () => {
               </motion.div>
             )}
           </AnimatePresence>
+        )}
+
+        {/* Pagination Controls */}
+        {!loading && totalPages > 1 && (
+          <div className="flex justify-center mt-6 gap-2">
+            <button
+              onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-3 py-1 bg-white dark:bg-[#1B314B] border border-[#4FD1C5] text-[#223A5E] dark:text-white rounded disabled:opacity-50"
+            >
+              Prev
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentPage(i + 1)}
+                className={`px-3 py-1 rounded ${currentPage === i + 1 ? 'bg-[#4FD1C5] text-white' : 'bg-white dark:bg-[#1B314B] border border-[#4FD1C5] text-[#223A5E] dark:text-white'}`}
+              >
+                {i + 1}
+              </button>
+            ))}
+            <button
+              onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className="px-3 py-1 bg-white dark:bg-[#1B314B] border border-[#4FD1C5] text-[#223A5E] dark:text-white rounded disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
         )}
       </div>
       <Footer />
