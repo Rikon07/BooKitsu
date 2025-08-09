@@ -6,6 +6,7 @@ import TopCategories from '../Components/Home Components/TopCategories';
 import DidYouKnow from '../Components/Home Components/DidYouKnow';
 import Testimonials from '../Components/Home Components/Testimonials';
 import FAQ from '../Components/Home Components/FAQ';
+import Carousel from '../Components/Home Components/Carousel';
 import { Helmet } from 'react-helmet';
 
 const Home = () => {
@@ -17,6 +18,7 @@ const Home = () => {
             <Navbar />
             <Banner />
             <TopCategories />
+            <Carousel />
             <DidYouKnow />
             <Testimonials />
             <FAQ />

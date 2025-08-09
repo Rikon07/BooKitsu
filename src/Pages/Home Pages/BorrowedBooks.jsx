@@ -1,10 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Navbar from "../../Components/Main Components/Navbar";
 import Footer from "../../Components/Main Components/Footer";
-import Loader from "../../Components/Main Components/Loader";
 import { Helmet } from "react-helmet";
 import useAxiosSecure from "../../Hooks/AxiosSecure";
 import Skeleton from "react-loading-skeleton";
@@ -17,7 +15,6 @@ const BorrowedBooks = () => {
   const axiosSecure = useAxiosSecure();
 
   // console.log(user.accessToken);
-  // console.log(token);
 
   useEffect(() => {
     if (!user?.email) return;
@@ -53,7 +50,6 @@ const BorrowedBooks = () => {
     }
   };
 
-  // if (loading) return <Loader />;
 
   return (
     <div className="cabin bg-[#D0E7F9] dark:bg-[#223A5E] text-[#223A5E] dark:text-[#D0E7F9]">
