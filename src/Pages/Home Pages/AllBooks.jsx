@@ -109,9 +109,10 @@ const AllBooks = () => {
                     <Skeleton height={20} width={`60%`} className="mb-1" />
                     <Skeleton height={20} width={`50%`} className="mb-1" />
                     <Skeleton height={20} width={`40%`} className="mb-1" />
+                    <Skeleton height={20} width={`30%`} className="mb-1" />
                   </div>
                 </div>
-                <Skeleton height={36} width={`40%`} className="mt-4" />
+                <Skeleton height={36} width={`40%`} className="" />
               </div>
             ))}
           </div>
@@ -138,11 +139,14 @@ const AllBooks = () => {
                         <p className="text-sm mb-2">By: {book.author}</p>
                         <p className="text-sm mb-2">Category: {book.category}</p>
                         <p className="text-sm mb-2">Rating: {book.rating}</p>
+                        <Link to={`/books/${book._id}`} className="bg-gradient-to-br from-[#4FD1C5] to-[#129990] text-white hover:bg-gradient-to-br hover:from-[#6C6E96] hover:to-[#4FD1C5] text-sm px-4 py-1 rounded-xl text-center hover:scale-101 transition">
+                                              Details
+                                            </Link>
                       </div>
                     </div>
                     <Link
                       to={`/update-book/${book._id}`}
-                      className="mt-4 inline-flex items-center justify-center gap-1 bg-[#4FD1C5] hover:bg-[#3BB8AC] text-white px-4 py-2 rounded"
+                      className="inline-flex items-center justify-center gap-1 bg-[#4FD1C5] hover:bg-[#3BB8AC] text-white px-4 py-2 rounded"
                     >
                       <MdOutlineUpdate className="text-lg" /> Update
                     </Link>
@@ -209,7 +213,7 @@ const AllBooks = () => {
               <button
                 key={i}
                 onClick={() => setCurrentPage(i + 1)}
-                className={`px-3 py-1 rounded ${currentPage === i + 1 ? 'bg-[#4FD1C5] text-white' : 'bg-white dark:bg-[#1B314B] border border-[#4FD1C5] text-[#223A5E] dark:text-white'}`}
+                className={`px-3 py-1 rounded ${currentPage === i + 1 ? 'bg-[#4FD1C5] text-white' : 'bg-white dark:bg-[#1B314B] border border-[#4FD1C5] text-[#223A5E] dark:text-white hover:bg-white/10 dark:hover:bg-[#223A5E]'}`}
               >
                 {i + 1}
               </button>
@@ -217,7 +221,7 @@ const AllBooks = () => {
             <button
               onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
               disabled={currentPage === totalPages}
-              className="px-3 py-1 bg-white dark:bg-[#1B314B] border border-[#4FD1C5] text-[#223A5E] dark:text-white rounded disabled:opacity-50"
+              className="px-3 py-1 bg-white dark:bg-[#1B314B] border border-[#4FD1C5] hover:bg-white/10 dark:hover:bg-[#223A5E] text-[#223A5E] dark:text-white rounded disabled:opacity-50"
             >
               Next
             </button>
