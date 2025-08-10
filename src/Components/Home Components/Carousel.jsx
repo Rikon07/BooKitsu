@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const classNames = (...classes) => classes.filter(Boolean).join(" ");
 
@@ -13,19 +13,17 @@ function MostAvailableBooks() {
   const timeoutRef = useRef(null);
 
   useEffect(() => {
-  axios
-    .get("https://bookitsu-server.vercel.app/books")
-    .then((res) => {
-      const sortedBooks = res.data
-        .sort((a, b) => b.quantity - a.quantity) 
-        .slice(0, 10); // pick only top 10
-
-      setBooks(sortedBooks);
-      setActiveItem(Math.floor(sortedBooks.length / 2));
-    })
-    .catch((err) => console.error(err));
-}, []);
-
+    axios
+      .get("https://bookitsu-server.vercel.app/books")
+      .then((res) => {
+        const sortedBooks = res.data
+          .sort((a, b) => b.quantity - a.quantity)
+          .slice(0, 10);
+        setBooks(sortedBooks);
+        setActiveItem(Math.floor(sortedBooks.length / 2));
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   useEffect(() => {
     if (!wrapperRef.current) return;
@@ -48,15 +46,47 @@ function MostAvailableBooks() {
   if (!books.length) return null;
 
   return (
-    <div className="w-full border-t-1 border-t-[#4FD1C5]/20 cabin bg-[#D0E7F9] dark:bg-[#223A5E] py-6 md:py-8">
+    <div className="w-full border-t border-t-[#4FD1C5]/20 cabin bg-[#D0E7F9] dark:bg-[#223A5E] py-6 md:py-8">
       <div className="w-full max-w-[1440px] mx-auto p-2 sm:p-6 md:p-4">
+        {/* Desktop Title */}
         <h2 className="hidden md:block text-2xl md:text-3xl font-bold mb-6 text-[#223A5E] dark:text-[#D0E7F9] text-center">
           Most Available Books
         </h2>
 
+        {/* Mobile View */}
+        <div className="block md:hidden">
+          <h2 className="text-2xl font-bold mb-4 text-[#223A5E] dark:text-[#D0E7F9] text-center">
+            Most Available Books
+          </h2>
+          <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+            {books.map((book) => (
+              <div
+                key={book._id}
+                className="flex-shrink-0 w-36 bg-white dark:bg-[#1B314B] rounded-lg shadow-md overflow-hidden"
+              >
+                <img
+                  src={book.image}
+                  alt={book.title}
+                  className="h-48 w-full object-cover"
+                />
+                <div className="p-2">
+                  <p className="text-sm font-semibold truncate">{book.title}</p>
+                  <Link
+                    to={`/books/${book._id}`}
+                    className="mt-1 inline-block text-xs px-3 py-1 bg-[#4FD1C5] text-[#223A5E] rounded-lg font-semibold hover:opacity-90 transition"
+                  >
+                    Details
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop View */}
         <ul
           ref={wrapperRef}
-          className="flex w-full flex-col gap-2 md:h-[350px] md:flex-row md:gap-[1.5%]"
+          className="hidden md:flex w-full flex-col gap-2 md:h-[350px] md:flex-row md:gap-[1.5%]"
         >
           {books.map((book, index) => (
             <li
@@ -101,7 +131,8 @@ function MostAvailableBooks() {
                   )}
                 >
                   <p className="text-lg font-bold">{book.title}</p>
-                  <Link to={`/books/${book._id}`}
+                  <Link
+                    to={`/books/${book._id}`}
                     className="mt-2 inline-block px-4 py-2 rounded-lg bg-[#4FD1C5] text-[#223A5E] font-semibold hover:opacity-90 transition"
                   >
                     Details

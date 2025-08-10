@@ -73,9 +73,20 @@ const Navbar = () => {
     setIsMenuOpen(false);
   }, [location.pathname]);
 
-  const navLinkStyle = ({ isActive }) =>
-    `transition-colors text-base duration-200 hover:text-[#4FD1C5] ${
-      isActive ? "font-bold underline underline-offset-4 text-[#4FD1C5]" : ""
+  // const navLinkStyle = ({ isActive }) =>
+  //   `transition-colors text-base duration-200 hover:text-[#4FD1C5] ${
+  //     isActive ? "font-bold underline underline-offset-4 text-[#4FD1C5]" : ""
+  //   }`;
+    const navLinkStyle = ({ isActive }) =>
+    `transition-colors duration-200 hover:text-[#4FD1C5] px-3 py-1 rounded-lg text-[#0F172A] dark:text-[#D0E7F9]
+   ${
+     isActive
+       ? "font-bold border text-[#4FD1C5] border-[#4FD1C5]/40 bg-[#D0E7F9] dark:bg-[#0F172A]/20 shadow backdrop-blur-xl"
+       : ""
+   } ${
+      !isActive
+        ? "hover:underline underline-offset-4 transition-colors duration-200"
+        : ""
     }`;
 
   const Links = (
@@ -130,7 +141,7 @@ const Navbar = () => {
       </Link>
 
       {/* Desktop Nav */}
-      <ul className="hidden lg:flex gap-10 text-[#223A5E] dark:text-[#D0E7F9] font-medium text-lg">
+      <ul className="hidden lg:flex gap-6 text-[#223A5E] dark:text-[#D0E7F9] font-medium">
         {Links}
       </ul>
 

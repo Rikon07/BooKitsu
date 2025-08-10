@@ -54,7 +54,7 @@ const TopCategories = () => {
   </Link>
 </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-6 xl:gap-8 max-w-[1435px] mx-auto">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-6 xl:gap-8 max-w-[1435px] mx-auto">
         {categories.map((cat, index) => (
           <motion.div
             key={cat.name}
