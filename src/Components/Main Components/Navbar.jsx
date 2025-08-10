@@ -81,7 +81,7 @@ const Navbar = () => {
     `transition-colors duration-200 hover:text-[#4FD1C5] px-3 py-1 rounded-lg text-[#0F172A] dark:text-[#D0E7F9]
    ${
      isActive
-       ? "font-bold border text-[#4FD1C5] border-[#4FD1C5]/40 bg-[#D0E7F9] dark:bg-[#0F172A]/20 shadow backdrop-blur-xl"
+       ? "font-semibold border text-[#4FD1C5] border-[#4FD1C5]/40 bg-[#D0E7F9] dark:bg-[#0F172A]/20 shadow backdrop-blur-xl"
        : ""
    } ${
       !isActive
@@ -141,7 +141,7 @@ const Navbar = () => {
       </Link>
 
       {/* Desktop Nav */}
-      <ul className="hidden lg:flex gap-6 text-[#223A5E] dark:text-[#D0E7F9] font-medium">
+      <ul className="hidden lg:flex gap-5 text-[#223A5E] dark:text-[#D0E7F9] font-medium">
         {Links}
       </ul>
 
